@@ -1,12 +1,43 @@
 package com.shopping.mall.main.service;
 
+import com.shopping.mall.main.mapper.MainMapper;
+import com.shopping.mall.main.vo.MainVo;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @AllArgsConstructor
 @Transactional
 @Service("mainService")
 public class MainService {
 
+    @Autowired
+    MainMapper mainMapper;
+
+    public List<MainVo> getMainList(int startIndex, int pageSize) {
+
+        return mainMapper.getMainList(startIndex, pageSize);
+    }
+
+    public int getTotalCount() {
+
+        return mainMapper.getTotalCount();
+    }
+
+    public MainVo getMainDetail(int mainSeq) {
+
+        mainMapper.updateViews(mainSeq);
+
+        return mainMapper.getMainDetail(mainSeq);
+    }
+
+    public List<MainVo> getMainPreview(int mainSeq) {
+
+        mainMapper.updateViews(mainSeq);
+
+        return mainMapper.getMainPreview(mainSeq);
+    }
 }
