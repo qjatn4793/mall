@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shopping.mall.login.mapper.LoginMapper">
+    <select id="loginCheck" parameterType="com.shopping.mall.login.vo.LoginVo" resultType="Integer">
+        SELECT COUNT(*) FROM user
+        WHERE user_id = #{userId}
+        AND user_pw = #{userPw}
+        AND status = 1
+    </select>
+
+    <select id="userSelectOne" parameterType="string" resultType="string">
+        SELECT user_pw FROM user WHERE user_id = #{userId}
+    </select>
+
+    <select id="userIdCheck" parameterType="com.shopping.mall.login.vo.LoginVo" resultType="Integer">
+        SELECT COUNT(*) FROM user WHERE user_id = #{userId}
+    </select>
+
+    <insert id="userRegister" parameterType="com.shopping.mall.login.vo.LoginVo">
+        INSERT INTO user (user_id, user_pw, user_name, user_birth, user_phone) VALUES (#{userId},#{userPw},#{userName},#{userBirth},#{userPhone})
+    </insert>
+
+    <select id="userInfo" parameterType="string" resultType="com.shopping.mall.login.vo.LoginVo">
+        SELECT * FROM user WHERE user_id = #{userId}
+    </select>
+
+    <update id="userUpdate" parameterType="com.shopping.mall.login.vo.LoginVo">
+        UPDATE user SET user_name = #{userName}, user_pw = #{userPw}, user_birth = #{userBirth}, user_phone = #{userPhone} WHERE user_id = #{userId}
+    </update>
+</mapper>
