@@ -38,13 +38,13 @@
                 <figure class="effect-ming tm-video-item">
                     <img th:src="@{${main.thumbContents}}" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2 th:text="${main.mainTitle}"></h2>
-                        <a th:href="@{/mainDetail(mainSeq=${main.mainSeq})}">View more</a>
+                        <h2 th:text="${main.productTitle}"></h2>
+                        <a th:href="@{/mainDetail(productSeq=${main.productSeq})}">View more</a>
                     </figcaption>
                 </figure>
                 <div class="d-flex justify-content-between tm-text-gray">
-                    <span th:text="${main.mainRegDate}"></span>
-                    <span th:text="${main.mainViews} + ' views'"></span>
+                    <span th:text="${main.productRegDate}"></span>
+                    <span th:text="${main.productViews} + ' views'"></span>
                 </div>
             </div>
         </div> <!-- row -->

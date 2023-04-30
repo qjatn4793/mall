@@ -4,44 +4,44 @@
 
 <mapper namespace="com.shopping.mall.main.mapper.MainMapper">
     <resultMap id="mainResultMap" type="com.shopping.mall.main.vo.MainVo">
-        <id property="mainSeq" column="main_seq"/>
-        <result property="mainTitle" column="main_title"/>
-        <result property="mainRegDate" column="main_regDate"/>
-        <result property="mainViews" column="main_views"/>
-        <result property="mainContents" column="main_contents"/>
+        <id property="productSeq" column="product_seq"/>
+        <result property="productTitle" column="product_title"/>
+        <result property="productRegDate" column="product_regDate"/>
+        <result property="productViews" column="product_views"/>
+        <result property="productContents" column="product_contents"/>
         <result property="thumbContents" column="thumb_contents"/>
     </resultMap>
 
     <select id="getMainList" resultMap="mainResultMap">
-      SELECT * FROM main_contents
+      SELECT * FROM product_contents
       LIMIT #{startIndex}, #{pageSize}
     </select>
 
     <select id="getTotalCount" resultType="int">
-      SELECT COUNT(*) FROM main_contents
+      SELECT COUNT(*) FROM product_contents
     </select>
 
     <select id="getMainDetail" parameterType="int" resultMap="mainResultMap">
-      SELECT * FROM main_contents
-      WHERE main_seq = #{mainSeq}
+      SELECT * FROM product_contents
+      WHERE product_seq = #{productSeq}
     </select>
 
     <update id="updateViews" parameterType="int">
-      UPDATE main_contents SET main_views = main_views + 1 WHERE main_seq = #{mainSeq}
+      UPDATE product_contents SET product_views = product_views + 1 WHERE product_seq = #{productSeq}
     </update>
 
     <select id="getMainPreview" parameterType="int" resultMap="mainResultMap">
         <![CDATA[
         SELECT * FROM (
         SELECT *, 1 as sort_order
-        FROM main_contents
-        WHERE main_seq > (SELECT main_seq FROM main_contents WHERE main_seq = #{mainSeq})
+        FROM product_contents
+        WHERE product_seq > (SELECT product_seq FROM product_contents WHERE product_seq = #{productSeq})
         UNION ALL
         SELECT *, 2 as sort_order
-        FROM main_contents
-        WHERE main_seq <= (SELECT main_seq FROM main_contents WHERE main_seq = #{mainSeq})
+        FROM product_contents
+        WHERE product_seq <= (SELECT product_seq FROM product_contents WHERE product_seq = #{productSeq})
         ) AS preview
-        ORDER BY sort_order, main_seq ASC
+        ORDER BY sort_order, product_seq ASC
         LIMIT 8
         ]]>
     </select>

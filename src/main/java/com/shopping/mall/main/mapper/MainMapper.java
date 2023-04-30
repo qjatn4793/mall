@@ -15,9 +15,9 @@ public interface MainMapper {
 
     int getTotalCount();
 
-    MainVo getMainDetail(int mainSeq);
+    MainVo getMainDetail(int productSeq);
 
-    int updateViews(int mainSeq);
+    int updateViews(int productSeq);
 
-    List<MainVo> getMainPreview(int mainSeq);
+    List<MainVo> getMainPreview(int productSeq);
 }

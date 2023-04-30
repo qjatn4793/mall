@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MainVo {
-    private int mainSeq;
-    private String mainTitle;
-    private String mainRegDate;
-    private int mainViews;
-    private String mainContents;
+    private int productSeq;
+    private String productTitle;
+    private String productRegDate;
+    private int productViews;
+    private String productContents;
     private String thumbContents;
 
 }

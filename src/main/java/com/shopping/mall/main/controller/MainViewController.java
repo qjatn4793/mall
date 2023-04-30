@@ -43,8 +43,6 @@ public class MainViewController {
         pageInfo.setPageNum(pageNum);
         pageInfo.setTotalPages(totalPages);
 
-        System.out.println(pageInfo);
-
         model.addAttribute("mainList", mainList);
         model.addAttribute("pageInfo", pageInfo);
 
@@ -52,11 +50,11 @@ public class MainViewController {
     }
 
     @RequestMapping("/mainDetail")
-    public String mainDetail(@RequestParam("mainSeq") int mainSeq, Model model){
+    public String mainDetail(@RequestParam("productSeq") int productSeq, Model model){
 
-        // mainSeq 값을 이용해 데이터 조회 및 처리
-        MainVo mainVo = mainService.getMainDetail(mainSeq);
-        List<MainVo> previewList = mainService.getMainPreview(mainSeq);
+        // productSeq 값을 이용해 데이터 조회 및 처리
+        MainVo mainVo = mainService.getMainDetail(productSeq);
+        List<MainVo> previewList = mainService.getMainPreview(productSeq);
 
         model.addAttribute("mainVo", mainVo);
         model.addAttribute("previewList", previewList);

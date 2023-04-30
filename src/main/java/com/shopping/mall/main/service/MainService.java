@@ -27,17 +27,17 @@ public class MainService {
         return mainMapper.getTotalCount();
     }
 
-    public MainVo getMainDetail(int mainSeq) {
+    public MainVo getMainDetail(int productSeq) {
 
-        mainMapper.updateViews(mainSeq);
+        mainMapper.updateViews(productSeq);
 
-        return mainMapper.getMainDetail(mainSeq);
+        return mainMapper.getMainDetail(productSeq);
     }
 
-    public List<MainVo> getMainPreview(int mainSeq) {
+    public List<MainVo> getMainPreview(int productSeq) {
 
-        mainMapper.updateViews(mainSeq);
+        mainMapper.updateViews(productSeq);
 
-        return mainMapper.getMainPreview(mainSeq);
+        return mainMapper.getMainPreview(productSeq);
     }
 }

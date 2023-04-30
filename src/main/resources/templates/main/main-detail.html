@@ -28,7 +28,7 @@
         </div>
         <div class="row tm-mb-90">            
             <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
-                <img th:src="@{${mainVo.mainContents}}" alt="Image" class="img-fluid" style="width: 1920px; height: 650px;">
+                <img th:src="@{${mainVo.productContents}}" alt="Image" class="img-fluid" style="width: 1920px; height: 650px;">
             </div>
             <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
                 <div class="tm-bg-gray tm-video-details">
@@ -51,7 +51,7 @@
                         <p>Free for both personal and commercial use. No need to pay anything. No need to make any attribution.</p>
                     </div>
                     <div>
-                        <h3 class="tm-text-gray-dark mb-3">Tags</h3>
+                        <h3 class="tm-text-gray-dark mb-3">Category</h3>
                         <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Cloud</a>
                         <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Bluesky</a>
                         <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block">Nature</a>
@@ -73,13 +73,13 @@
                 <figure class="effect-ming tm-video-item">
                     <img th:src="@{${preview.thumbContents}}" alt="Image" class="img-fluid">
                     <figcaption class="d-flex align-items-center justify-content-center">
-                        <h2 th:text="${preview.mainTitle}"></h2>
-                        <a th:href="@{/mainDetail(mainSeq=${preview.mainSeq})}">View more</a>
+                        <h2 th:text="${preview.productTitle}"></h2>
+                        <a th:href="@{/mainDetail(productSeq=${preview.productSeq})}">View more</a>
                     </figcaption>
                 </figure>
                 <div class="d-flex justify-content-between tm-text-gray">
-                    <span th:text="${preview.mainRegDate}"></span>
-                    <span th:text="${preview.mainViews} + ' views'"></span>
+                    <span th:text="${preview.productRegDate}"></span>
+                    <span th:text="${preview.productViews} + ' views'"></span>
                 </div>
             </div>
         </div> <!-- row -->
