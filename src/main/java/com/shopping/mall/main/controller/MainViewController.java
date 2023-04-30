@@ -55,9 +55,11 @@ public class MainViewController {
         // productSeq 값을 이용해 데이터 조회 및 처리
         MainVo mainVo = mainService.getMainDetail(productSeq);
         List<MainVo> previewList = mainService.getMainPreview(productSeq);
+        List<MainVo> categoryList = mainService.getCategoryList(); // category 데이터 가져오기
 
         model.addAttribute("mainVo", mainVo);
         model.addAttribute("previewList", previewList);
+        model.addAttribute("categoryList", categoryList);
         return "main/main-detail.html";
     }
 }

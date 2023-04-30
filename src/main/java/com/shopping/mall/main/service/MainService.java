@@ -22,6 +22,11 @@ public class MainService {
         return mainMapper.getMainList(startIndex, pageSize);
     }
 
+    public List<MainVo> getCategoryList() {
+
+        return mainMapper.getCategoryList();
+    }
+
     public int getTotalCount() {
 
         return mainMapper.getTotalCount();
@@ -35,8 +40,6 @@ public class MainService {
     }
 
     public List<MainVo> getMainPreview(int productSeq) {
-
-        mainMapper.updateViews(productSeq);
 
         return mainMapper.getMainPreview(productSeq);
     }

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MainVo {
+    /*product_contents*/
     private int productSeq;
     private String productTitle;
     private String productRegDate;
@@ -17,4 +18,7 @@ public class MainVo {
     private String productContents;
     private String thumbContents;
 
+    /*category_contents*/
+    private int categorySeq;
+    private String categoryName;
 }

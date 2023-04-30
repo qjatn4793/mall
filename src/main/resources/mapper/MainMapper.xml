@@ -12,9 +12,20 @@
         <result property="thumbContents" column="thumb_contents"/>
     </resultMap>
 
+    <resultMap id="categoryResultMap" type="com.shopping.mall.main.vo.MainVo">
+        <id property="categorySeq" column="category_seq"/>
+        <result property="productSeq" column="product_seq"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+
     <select id="getMainList" resultMap="mainResultMap">
       SELECT * FROM product_contents
+      WHERE product_status = 1
       LIMIT #{startIndex}, #{pageSize}
+    </select>
+
+    <select id="getCategoryList" resultMap="categoryResultMap">
+      SELECT * FROM category
     </select>
 
     <select id="getTotalCount" resultType="int">
@@ -23,7 +34,7 @@
 
     <select id="getMainDetail" parameterType="int" resultMap="mainResultMap">
       SELECT * FROM product_contents
-      WHERE product_seq = #{productSeq}
+      WHERE product_status = 1 AND product_seq = #{productSeq}
     </select>
 
     <update id="updateViews" parameterType="int">
@@ -36,10 +47,12 @@
         SELECT *, 1 as sort_order
         FROM product_contents
         WHERE product_seq > (SELECT product_seq FROM product_contents WHERE product_seq = #{productSeq})
+        AND product_status = 1
         UNION ALL
         SELECT *, 2 as sort_order
         FROM product_contents
         WHERE product_seq <= (SELECT product_seq FROM product_contents WHERE product_seq = #{productSeq})
+        AND product_status = 1
         ) AS preview
         ORDER BY sort_order, product_seq ASC
         LIMIT 8

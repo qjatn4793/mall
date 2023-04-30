@@ -13,6 +13,8 @@ public interface MainMapper {
 
     List<MainVo> getMainList(@Param("startIndex") int startIndex, @Param("pageSize") int pageSize);
 
+    List<MainVo> getCategoryList();
+
     int getTotalCount();
 
     MainVo getMainDetail(int productSeq);
