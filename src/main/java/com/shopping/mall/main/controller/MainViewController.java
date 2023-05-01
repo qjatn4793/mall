@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -69,5 +70,16 @@ public class MainViewController {
         model.addAttribute("previewList", previewList);
         model.addAttribute("categoryList", categoryList);
         return "main/main-detail.html";
+    }
+
+    @GetMapping(value = "/search")
+    public String search(@RequestParam("query") String searchWord, Model model) {
+
+        // 검색어(searchWord)를 이용한 검색 로직 수행
+        List<MainVo> searchResult = mainService.search(searchWord);
+        model.addAttribute("mainList", searchResult);
+        model.addAttribute("message",searchWord + "에 대한 검색 결과가 없습니다.");
+
+        return "main/searchResult.html";
     }
 }

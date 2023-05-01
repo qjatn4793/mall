@@ -22,4 +22,6 @@ public interface MainMapper {
     int updateViews(int productSeq);
 
     List<MainVo> getMainPreview(int productSeq);
+
+    List<MainVo> search(String searchWord);
 }

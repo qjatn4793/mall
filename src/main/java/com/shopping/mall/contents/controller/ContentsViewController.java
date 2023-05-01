@@ -12,12 +12,12 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class ContentsViewController {
 
-    @GetMapping("/contents")
+    /*@GetMapping("/contents")
     public String contents(Model model, HttpServletRequest request){
 
         HttpSession session = request.getSession();
         model.addAttribute("loginVo", session.getAttribute("loginVo"));
 
         return "contents/contents.html";
-    }
+    }*/
 }

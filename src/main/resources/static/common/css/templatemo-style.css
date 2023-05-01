@@ -244,6 +244,11 @@ a.tm-text-primary:hover { color:#666666; }
     border-color: #5963cc;
 }
 
+.nav-link-6.active,
+.nav-link-6:hover {
+    border-color: #a881cc;
+}
+
 .tm-search-input {
     width: 360px;
     border-radius: 0;

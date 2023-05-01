@@ -59,4 +59,9 @@
         ]]>
     </select>
 
+    <select id="search" parameterType="String" resultMap="mainResultMap">
+      SELECT * FROM product_contents
+      WHERE product_status = 1
+      AND product_title LIKE CONCAT('%', #{searchWord}, '%')
+    </select>
 </mapper>

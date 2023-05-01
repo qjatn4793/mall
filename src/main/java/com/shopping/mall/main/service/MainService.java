@@ -43,4 +43,9 @@ public class MainService {
 
         return mainMapper.getMainPreview(productSeq);
     }
+
+    public List<MainVo> search(String searchWord) {
+
+        return mainMapper.search(searchWord);
+    }
 }

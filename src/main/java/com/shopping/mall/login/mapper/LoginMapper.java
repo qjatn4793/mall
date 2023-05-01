@@ -19,5 +19,7 @@ public interface LoginMapper {
     LoginVo userInfo(String userId);
 
     int userUpdate(LoginVo loginVo);
+
+    int updateUserImg(LoginVo loginVo);
     
 }

@@ -20,11 +20,9 @@
             <h2 class="col-6 tm-text-primary">
                 Latest Photos
             </h2>
-            <div class="col-6 d-flex justify-content-end align-items-center">
-                <form action="" class="tm-text-primary">
-                    Page <span th:text="${pageInfo.pageNum}"></span> of <span th:text="${pageInfo.totalPages}"></span>
-                </form>
-            </div>
+        </div>
+        <div class="tm-text-gray" th:if="${#lists.isEmpty(mainList)}">
+            <p th:text="${message}"></p>
         </div>
         <div class="row tm-mb-90 tm-gallery">
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5" th:each="main : ${mainList}">
@@ -41,19 +39,6 @@
                 </div>
             </div>
         </div> <!-- row -->
-        <div class="row tm-mb-90">
-            <div class="col-12 d-flex justify-content-between align-items-center tm-paging-col">
-                <a th:if="${pageInfo.pageNum != 1}" th:href="@{/(pageNum=${pageInfo.pageNum-1})}" class="btn btn-primary tm-btn-prev mb-2">Previous</a>
-                <a th:if="${pageInfo.pageNum == 1}" class="btn btn-primary tm-btn-prev mb-2">Previous</a>
-                <div class="tm-paging d-flex">
-                    <a th:if="${pageInfo.pageNum > 1}" th:href="@{/(pageNum=${pageInfo.pageNum-1})}" class="tm-paging-link">&lt;</a>
-                    <a th:each="i : ${#numbers.sequence(1, pageInfo.totalPages)}" th:href="@{/(pageNum=${i})}" th:classappend="${i == pageInfo.pageNum} ? 'active tm-paging-link' : 'tm-paging-link'" th:text="${i}"></a>
-                    <a th:if="${pageInfo.pageNum < pageInfo.totalPages}" th:href="@{/(pageNum=${pageInfo.pageNum+1})}" class="tm-paging-link">&gt;</a>
-                </div>
-                <a th:if="${pageInfo.pageNum != pageInfo.totalPages}" th:href="@{/(pageNum=${pageInfo.pageNum+1})}" class="btn btn-primary tm-btn-next">Next Page</a>
-                <a th:if="${pageInfo.pageNum == pageInfo.totalPages}" class="btn btn-primary tm-btn-next">Next Page</a>
-            </div>
-        </div>
     </div> <!-- container-fluid, tm-container-content -->
 
     <!--공통 footer-->

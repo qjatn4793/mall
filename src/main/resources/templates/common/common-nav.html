@@ -16,11 +16,11 @@
                         Product
                     </a>
                 </li>
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link nav-link-2" href="/contents" th:classappend="${#httpServletRequest.getRequestURI().startsWith('/contents') ? 'active' : ''}">
                         Videos
                     </a>
-                </li>
+                </li>-->
                 <li class="nav-item">
                     <a class="nav-link nav-link-3" href="/about" th:classappend="${#httpServletRequest.getRequestURI() == '/about' ? 'active' : ''}">
                         About
@@ -42,7 +42,7 @@
                     </a>
                 </li>
                 <li class="nav-item" th:if="${loginVo != null}">
-                    <a class="nav-link nav-link-5" href="#" onclick="userLogout()">
+                    <a class="nav-link nav-link-6" href="#" onclick="userLogout()">
                         Logout
                     </a>
                 </li>

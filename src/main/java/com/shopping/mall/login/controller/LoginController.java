@@ -5,10 +5,19 @@ import com.shopping.mall.configuration.SHA256;
 import com.shopping.mall.login.service.LoginService;
 import com.shopping.mall.login.vo.LoginVo;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -20,7 +29,11 @@ import static java.lang.String.valueOf;
 @ResponseBody
 public class LoginController {
 
+    @Autowired
     LoginService loginService;
+
+    @Autowired
+    private Environment env;
 
 
     @PostMapping("/login")
@@ -30,8 +43,16 @@ public class LoginController {
         int loginCheck = 0;
         String userPw = loginService.userSelectOne(loginVo.getUserId());
 
+        if (session == null || userPw == null) {
+            return loginCheck;
+        }
+
         if(userPw.equals(sha256.encrypt(loginVo.getUserPw()))) {
-            loginVo.setUserPw(sha256.encrypt(loginVo.getUserPw()));
+            try {
+                loginVo.setUserPw(sha256.encrypt(loginVo.getUserPw()));
+            }catch (Exception e) {
+                //System.out.println(e);
+            }
             loginCheck = loginService.loginCheck(loginVo);
             loginVo = loginService.userInfo(loginVo.getUserId());
             int status = loginVo.getStatus();
@@ -146,4 +167,38 @@ public class LoginController {
             return 0;
         }
     }
+
+    @PostMapping("/uploadProfileImg")
+    public ResponseEntity<String> uploadProfileImg(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+
+        LoginVo loginVo = new LoginVo();
+
+        Path path = Paths.get("/manager/image/user" + "/" + file.getOriginalFilename());
+
+        LoginVo sessionLoginVo = (LoginVo)request.getSession().getAttribute("loginVo");
+
+        loginVo.setUserProfile(path.toString());
+        loginVo.setUserId(sessionLoginVo.getUserId());
+
+        loginService.updateUserImg(loginVo);
+
+        return uploadFile(file, request);
+    }
+
+    /*파일업로드 공통 메소드*/
+    private ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) {
+
+        try {
+            String uploadDir = env.getProperty("shared.image.upload-dir");
+            Path path = Paths.get(uploadDir + "/user/" + file.getOriginalFilename());
+
+            Files.write(path, file.getBytes());
+            request.getSession().invalidate();
+            return ResponseEntity.ok("File uploaded successfully");
+        } catch (IOException e) {
+            request.getSession().invalidate();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
+        }
+    }
+
 }

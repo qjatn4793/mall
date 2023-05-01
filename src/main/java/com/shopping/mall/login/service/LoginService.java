@@ -43,4 +43,9 @@ public class LoginService {
         return loginMapper.userUpdate(loginVo);
     }
 
+    public int updateUserImg(LoginVo loginVo) {
+
+        return loginMapper.updateUserImg(loginVo);
+    }
+
 }
