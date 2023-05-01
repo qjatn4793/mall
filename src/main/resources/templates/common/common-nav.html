@@ -31,7 +31,56 @@
                         Contact
                     </a>
                 </li>
+                <li class="nav-item" th:if="${loginVo == null}">
+                    <a class="nav-link nav-link-5" href="/login" th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active' : ''}">
+                        Login
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${loginVo != null}">
+                    <a class="nav-link nav-link-5" th:href="@{/userMypage}">
+                        MyPage
+                    </a>
+                </li>
+                <li class="nav-item" th:if="${loginVo != null}">
+                    <a class="nav-link nav-link-5" href="#" onclick="userLogout()">
+                        Logout
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
+    <script>
+        //로그아웃
+        function userLogout(){
+
+            var url = $(location).attr('href');
+
+            $.ajax({
+                type : "DELETE",
+                url : "/login",
+                dataType : "text",
+                async : false,
+                error : function(){
+                    alert('통신실패!!');
+                },
+                success : function(data){
+                    if(data == "logout"){
+                        alert("로그아웃 성공");
+
+                        if(url != ""){
+                            sessionStorage.clear();
+                            location.replace(url);
+                        }else {
+                            sessionStorage.clear();
+                            location.replace("/");
+                        }
+                    }else {
+                        alert("로그아웃 실패");
+
+                        location.replace("/");
+                    }
+                }
+            });
+        }
+    </script>
 </nav>

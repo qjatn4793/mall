@@ -2,6 +2,7 @@ package com.shopping.mall.login.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,8 @@ public class LoginViewController {
 
         HttpSession session = request.getSession();
 
-        if(session.getAttribute("loginCheck") == "success"){
-            return "/main/main.html";
+        if(session.getAttribute("loginVo") != null){
+            return "redirect:/";
         }else {
             session.removeAttribute("loginCheck");
             session.removeAttribute("userId");
@@ -26,15 +27,16 @@ public class LoginViewController {
     }
 
     @GetMapping("/userMypage")
-    public String userMypage(HttpServletRequest request){
+    public String userMypage(HttpServletRequest request, Model model){
 
         HttpSession session = request.getSession();
 
-        if(session.getAttribute("loginCheck") != "success"){
-            return "/main/main.html";
+        if(session.getAttribute("loginVo") != null){
+            model.addAttribute("loginVo", session.getAttribute("loginVo"));
+            return "login/userMypage.html";
         }
 
-        return "login/userMypage.html";
+        return "redirect:/";
     }
 
     @GetMapping("/userRegister")

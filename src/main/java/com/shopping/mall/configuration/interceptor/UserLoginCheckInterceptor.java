@@ -20,18 +20,9 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor {
         boolean loginCheck =false;
 
         HttpSession session = request.getSession();
-        if(!StringUtils.isEmpty(session.getAttribute("loginCheck"))){
-            if(session.getAttribute("loginCheck").equals("success")){
-                if(session.getAttribute("userId") != null && session.getAttribute("userId") != "" && session.getAttribute("userPw") != null && session.getAttribute("userPw") != ""){
-                    loginCheck = true;
-                }else {
-                    response.sendRedirect("/login");
-                    session.invalidate();
-                }
-            }else{
-                response.sendRedirect("/login");
-                session.invalidate();
-            }
+        if(session.getAttribute("loginVo") != null){
+            loginCheck = true;
+
         }else{
             response.sendRedirect("/login");
             session.invalidate();

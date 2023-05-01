@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @AllArgsConstructor
@@ -30,7 +32,10 @@ public class MainViewController {
     }*/
 
     @RequestMapping("/")
-    public String main(@RequestParam(defaultValue = "1") int pageNum, Model model){
+    public String main(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        model.addAttribute("loginVo", session.getAttribute("loginVo"));
 
         int pageSize = 12; // 한 페이지에 보여줄 데이터 개수
         int totalItemCount = mainService.getTotalCount(); // 전체 데이터 개수
@@ -50,7 +55,10 @@ public class MainViewController {
     }
 
     @RequestMapping("/mainDetail")
-    public String mainDetail(@RequestParam("productSeq") int productSeq, Model model){
+    public String mainDetail(@RequestParam("productSeq") int productSeq, Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+        model.addAttribute("loginVo", session.getAttribute("loginVo"));
 
         // productSeq 값을 이용해 데이터 조회 및 처리
         MainVo mainVo = mainService.getMainDetail(productSeq);

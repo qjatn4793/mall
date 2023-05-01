@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<!--공통 head-->
+<head th:replace="~{common/common-head :: common-head}"></head>
+<body class="bg-primary">
+<div id="layoutAuthentication">
+    <div id="layoutAuthentication_content">
+        <main>
+            <div class="container mt-lg-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5" style="margin-top: 12%;">
+                        <div class="card shadow-lg border-0 rounded-lg">
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">로그인</h3></div>
+                            <div class="card-body">
+                                <div name="userLoginForm" id="userLoginForm">
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="userId" name="userId" type="text" placeholder="id" />
+                                        <label for="userId">id</label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input class="form-control" id="userPw" name="userPw" type="password" placeholder="Password" onkeyup="loginEnterKey()"/>
+                                        <label for="userPw">Password</label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
+                                        <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                        <a class="small" href="/userPassword">Forgot Password?</a>
+                                        <button class="btn btn-primary" onclick="userLogin()">Login</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer text-center py-3">
+                                <div class="small"><a href="/userRegister">회원가입</a></div>
+                            </div>
+                            <a class="badge bg-secondary text-decoration-none link-light" href="/" >메인으로 돌아가기</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script th:inline="javascript">
+    function loginEnterKey() {
+        if(window.event.keyCode==13){
+            userLogin();
+        }
+    }
+
+    //로그인
+    function userLogin(){
+
+        var userId = $("#userId").val();
+        var userPw = $("#userPw").val();
+        var referrer = document.referrer;
+
+        // 특정 문자열 발견시 공백으로 치환 : userId
+        userId = userId.replace(/\</g,'');
+        userId = userId.replace(/\>/g,'');
+        userId = userId.replace(/\#/g,'');
+        userId = userId.replace(/\$/g,'');
+        userId = userId.replace(/\@/g,'');
+        userId = userId.replace(/\^/g,'');
+        userId = userId.replace(/\&/g,'');
+        userId = userId.replace(/\*/g,'');
+        userId = userId.replace(/\(/g,'');
+        userId = userId.replace(/\)/g,'');
+        userId = userId.replace(/\;/g,'');
+        userId = userId.replace(/\=/g,'');
+        userId = userId.replace(/\'/g,'');
+        userId = userId.replace(/\"/g,'');
+
+
+        $.ajax({
+            type : "POST",
+            url : "/login",
+            dataType : "text",
+            contentType: "application/json",
+            data: JSON.stringify({
+                "userId" : userId,
+                "userPw" : userPw
+            }),
+            async : false,
+            error : function(){
+                alert('로그인을 실패하였습니다. ID 또는 PW를 확인해주세요');
+            },
+            success : function(data){
+                if(data == "1"){
+                    location.replace("/");
+                }else if(data == "2") {
+                    alert('블랙리스트로 등록된 사용자 입니다. \n고객센터로 연락주시길 바랍니다.');
+                    location.replace("/login");
+                }else{
+                    alert('로그인을 실패하였습니다. ID 또는 PW를 확인해주세요');
+                    location.replace("/login");
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>
