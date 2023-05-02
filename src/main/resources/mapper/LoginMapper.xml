@@ -19,7 +19,7 @@
     </select>
 
     <insert id="userRegister" parameterType="com.shopping.mall.login.vo.LoginVo">
-        INSERT INTO user (user_id, user_pw, user_name, user_birth, user_phone, reg_date) VALUES (#{userId},#{userPw},#{userName},#{userBirth},#{userPhone}, NOW())
+        INSERT INTO user (user_id, user_pw, user_name, user_birth, user_phone, user_email, reg_date) VALUES (#{userId},#{userPw},#{userName},#{userBirth},#{userPhone}, #{userEmail}, NOW())
     </insert>
 
     <select id="userInfo" parameterType="string" resultType="com.shopping.mall.login.vo.LoginVo">
@@ -32,5 +32,9 @@
 
     <update id="updateUserImg" parameterType="com.shopping.mall.login.vo.LoginVo">
         UPDATE user SET user_profile = #{userProfile} WHERE user_id = #{userId}
+    </update>
+
+    <update id="updateLoginDate" parameterType="com.shopping.mall.login.vo.LoginVo">
+        UPDATE user SET login_date = NOW() WHERE user_id = #{userId}
     </update>
 </mapper>

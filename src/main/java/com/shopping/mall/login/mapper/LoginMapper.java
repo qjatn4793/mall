@@ -21,5 +21,7 @@ public interface LoginMapper {
     int userUpdate(LoginVo loginVo);
 
     int updateUserImg(LoginVo loginVo);
+
+    int updateLoginDate(LoginVo loginVo);
     
 }

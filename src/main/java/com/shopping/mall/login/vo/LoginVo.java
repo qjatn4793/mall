@@ -17,5 +17,8 @@ public class LoginVo {
     private String userProfile;
     private String userBirth;
     private String userPhone;
+    private String userEmail;
+    private String regDate;
+    private String loginDate;
     private int status;
 }

@@ -5,6 +5,7 @@ import com.shopping.mall.configuration.SHA256;
 import com.shopping.mall.login.service.LoginService;
 import com.shopping.mall.login.vo.LoginVo;
 import lombok.AllArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -53,8 +54,11 @@ public class LoginController {
             }catch (Exception e) {
                 //System.out.println(e);
             }
+            // 로그인 시간 기록
+            loginService.updateLoginDate(loginVo);
             loginCheck = loginService.loginCheck(loginVo);
             loginVo = loginService.userInfo(loginVo.getUserId());
+
             int status = loginVo.getStatus();
 
             if (status == 1) { // 일반 사용자 일경우
@@ -187,11 +191,15 @@ public class LoginController {
 
     /*파일업로드 공통 메소드*/
     private ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) {
-
         try {
             String uploadDir = env.getProperty("shared.image.upload-dir");
-            Path path = Paths.get(uploadDir + "/user/" + file.getOriginalFilename());
-
+            String filename = file.getOriginalFilename();
+            String extension = FilenameUtils.getExtension(filename);
+            if (!extension.equalsIgnoreCase("jpg") && !extension.equalsIgnoreCase("png")) {
+                request.getSession().invalidate();
+                return ResponseEntity.badRequest().body("Only jpg or png files are allowed");
+            }
+            Path path = Paths.get(uploadDir + "/user/" + filename);
             Files.write(path, file.getBytes());
             request.getSession().invalidate();
             return ResponseEntity.ok("File uploaded successfully");

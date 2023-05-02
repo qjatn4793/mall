@@ -19,7 +19,7 @@
         <div class="row mb-4">
             <h2 class="col-12 tm-text-primary">Photo title goes here</h2>
         </div>
-        <div class="row tm-mb-90">            
+        <div class="row tm-mb-50">
             <div class="col-xl-8 col-lg-7 col-md-6 col-sm-12">
                 <img th:src="@{${mainVo.productContents}}" alt="Image" class="img-fluid" style="width: 1920px; height: 650px;">
             </div>
@@ -50,6 +50,75 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-12 tm-mb-50">
+            <div class="card">
+                <div class="card-body">
+                    <div class="custom-tab">
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a style="text-align: center; width: 120px;" class="nav-link active" id="custom-nav-home-tab" data-toggle="tab" href="#custom-nav-home" role="tab" aria-controls="custom-nav-home" aria-selected="true">상세정보</a>
+                                <a style="text-align: center; width: 120px;" class="nav-link" id="custom-nav-profile-tab" data-toggle="tab" href="#custom-nav-profile" role="tab" aria-controls="custom-nav-profile" aria-selected="false">리뷰</a>
+                                <a style="text-align: center; width: 120px;" class="nav-link" id="custom-nav-contact-tab" data-toggle="tab" href="#custom-nav-contact" role="tab" aria-controls="custom-nav-contact" aria-selected="false">Q&A</a>
+                            </div>
+                        </nav>
+                        <div class="tab-content pl-3 pt-2" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="custom-nav-home" role="tabpanel" aria-labelledby="custom-nav-home-tab">
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, irure terry richardson ex sd. Alip placeat salvia cillum iphone. Seitan alip s cardigan american apparel, butcher voluptate nisi .</p>
+                            </div>
+                            <div class="tab-pane fade" id="custom-nav-profile" role="tabpanel" aria-labelledby="custom-nav-profile-tab">
+                                <div class="tm-bg-gray tm-comment-section col-lg-4">
+                                    <h2 class="tm-text-primary">댓글</h2>
+                                    <div class="tm-comment-form">
+                                        <form>
+                                            <div class="form-group">
+                                                <textarea class="form-control" id="comment" rows="3"></textarea>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>별점</label>
+                                                <div class="starpoint_wrap">
+                                                    <div class="starpoint_box">
+                                                        <label for="starpoint_1" class="label_star" title="0.5"><span class="blind">0.5점</span></label>
+                                                        <label for="starpoint_2" class="label_star" title="1"><span class="blind">1점</span></label>
+                                                        <label for="starpoint_3" class="label_star" title="1.5"><span class="blind">1.5점</span></label>
+                                                        <label for="starpoint_4" class="label_star" title="2"><span class="blind">2점</span></label>
+                                                        <label for="starpoint_5" class="label_star" title="2.5"><span class="blind">2.5점</span></label>
+                                                        <label for="starpoint_6" class="label_star" title="3"><span class="blind">3점</span></label>
+                                                        <label for="starpoint_7" class="label_star" title="3.5"><span class="blind">3.5점</span></label>
+                                                        <label for="starpoint_8" class="label_star" title="4"><span class="blind">4점</span></label>
+                                                        <label for="starpoint_9" class="label_star" title="4.5"><span class="blind">4.5점</span></label>
+                                                        <label for="starpoint_10" class="label_star" title="5"><span class="blind">5점</span></label>
+                                                        <input type="radio" name="starpoint" id="starpoint_1" class="star_radio">
+                                                        <input type="radio" name="starpoint" id="starpoint_2" class="star_radio">
+                                                        <input type="radio" name="starpoint" id="starpoint_3" class="star_radio">
+                                                        <input type="radio" name="starpoint" id="starpoint_4" class="star_radio">
+                                                        <input type="radio" name="starpoint" id="starpoint_5" class="star_radio">
+                                                        <input type="radio" name="starpoint" id="starpoint_6" class="star_radio">
+                                                        <input type="radio" name="starpoint" id="starpoint_7" class="star_radio">
+                                                        <input type="radio" name="starpoint" id="starpoint_8" class="star_radio">
+                                                        <input type="radio" name="starpoint" id="starpoint_9" class="star_radio">
+                                                        <input type="radio" name="starpoint" id="starpoint_10" class="star_radio">
+                                                        <span class="starpoint_bg"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">작성하기</button>
+                                        </form>
+                                    </div>
+                                    <div class="tm-comment-list">
+                                        <!-- 댓글 목록이 여기에 추가됩니다 -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="custom-nav-contact" role="tabpanel" aria-labelledby="custom-nav-contact-tab">
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, irure terry richardson ex sd. Alip placeat salvia cillum iphone. Seitan alip s cardigan american apparel, butcher voluptate nisi .</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row mb-4">
             <h2 class="col-12 tm-text-primary">
                 Related Photos

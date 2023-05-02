@@ -55,7 +55,7 @@
         AND product_status = 1
         ) AS preview
         ORDER BY sort_order, product_seq ASC
-        LIMIT 8
+        LIMIT 4
         ]]>
     </select>
 
