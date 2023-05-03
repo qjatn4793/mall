@@ -15,7 +15,10 @@ public class MainVo {
     private String productTitle;
     private String productRegDate;
     private int productViews;
+    private int productCount;
     private String productContents;
+    private String productExplain;
+    private Integer productPrice;
     private String thumbContents;
 
     /*category_contents*/

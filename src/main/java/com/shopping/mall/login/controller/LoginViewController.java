@@ -18,7 +18,7 @@ public class LoginViewController {
         HttpSession session = request.getSession();
 
         if(session.getAttribute("loginVo") != null){
-            return "redirect:/";
+            return "redirect:" + request.getHeader("Referer");
         }else {
             session.removeAttribute("loginCheck");
             session.removeAttribute("userId");
@@ -44,7 +44,7 @@ public class LoginViewController {
 
         HttpSession session = request.getSession();
 
-        if(session.getAttribute("loginCheck") == "success"){
+        if(session.getAttribute("loginVo") != null){
             return "/main/main.html";
         }
 
@@ -56,7 +56,7 @@ public class LoginViewController {
 
         HttpSession session = request.getSession();
 
-        if(session.getAttribute("loginCheck") == "success"){
+        if(session.getAttribute("loginVo") != null){
             return "/main/main.html";
         }
 

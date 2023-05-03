@@ -25,27 +25,30 @@
             </div>
             <div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
                 <div class="tm-bg-gray tm-video-details">
-                    <p class="mb-4">
-                        Please support us by making <a href="https://paypal.me/templatemo" target="_parent" rel="sponsored">a PayPal donation</a>. Nam ex nibh, efficitur eget libero ut, placerat aliquet justo. Cras nec varius leo.
-                    </p>
-                    <div class="text-center mb-5">
-                        <a href="#" class="btn btn-primary tm-btn-big">Download</a>
-                    </div>                    
-                    <div class="mb-4 d-flex flex-wrap">
-                        <div class="mr-4 mb-2">
-                            <span class="tm-text-gray-dark">Dimension: </span><span class="tm-text-primary">1920x1080</span>
-                        </div>
-                        <div class="mr-4 mb-2">
-                            <span class="tm-text-gray-dark">Format: </span><span class="tm-text-primary">JPG</span>
-                        </div>
-                    </div>
-                    <div class="mb-4">
-                        <h3 class="tm-text-gray-dark mb-3">License</h3>
-                        <p>Free for both personal and commercial use. No need to pay anything. No need to make any attribution.</p>
+                    <p class="mb-4 font-3xl" th:text="${mainVo.productTitle}"></p>
+                    <div class="mb-4" th:if="${mainVo.productExplain}">
+                        <h3 class="tm-text-gray-dark mb-3">상품설명</h3>
+                        <p th:text="${mainVo.productExplain}"></p>
                     </div>
                     <div>
-                        <h3 class="tm-text-gray-dark mb-3">Category</h3>
+                        <h3 class="tm-text-gray-dark mb-3">카테고리</h3>
                         <a href="#" class="tm-text-primary mr-4 mb-2 d-inline-block" th:each="category : ${categoryList}" th:text="${category.categoryName}" th:if="${mainVo.categorySeq == category.categorySeq}"></a>
+                        <div>남은 재고<p th:text="${mainVo.productCount} + '개'"></p></div>
+                    </div>
+                    <div class="mb-5 d-flex" style="width: 100%;">
+                        <div style="margin-right: 4px;">상품 수량 : </div><input type="number" id="orderCount" name="orderCount" value="1" min="1" max="100" style="height: 25px;" oninput="updatePrice()"/>
+                        <h3 class="tm-text-gray-dark" id="productPrice" th:text="${mainVo.productPrice} + '원'" style="margin-left: auto; text-align: center;"></h3>
+                    </div>
+                    <div class="mb-4 flex-wrap">
+                        <div>
+                            <div class="mb-4 d-flex" style="width: 100%;">
+                                <a href="#" id="buy" class="btn btn-primary" style="padding: 12px 85px 14px; margin-right: 10px; background-color: #007bff; font-size: 16px; border-color: #007bff; color: #fff;">구매하기</a>
+                                <a href="#" id="basket" class="btn btn-primary" style="padding: 12px 85px 14px; background-color: #28a745; font-size: 16px; border-color: #28a745; color: #fff;">장바구니</a>
+                            </div>
+                            <div class="mb-4">
+                                <a href="#" class="btn btn-primary" style="padding: 12px 197px 14px;" onclick="window.location.href = document.referrer;">목록 보기</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,7 +130,7 @@
         <div class="row tm-mb-90 tm-gallery">
             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-5" th:each="preview : ${previewList}">
                 <figure class="effect-ming tm-video-item">
-                    <img th:src="@{${preview.thumbContents}}" alt="Image" class="img-fluid" style="height: 235px;">
+                    <img th:src="@{${preview.thumbContents}}" alt="Image" class="img-fluid" style="height: 235px; width: 100%;">
                     <figcaption class="d-flex align-items-center justify-content-center">
                         <h2 th:text="${preview.productTitle}"></h2>
                         <a th:href="@{/mainDetail(productSeq=${preview.productSeq})}">View more</a>
@@ -139,8 +142,6 @@
                 </div>
             </div>
         </div> <!-- row -->
-
-        <a href="#" class="btn btn-primary" onclick="history.back()">목록 보기</a>
     </div> <!-- container-fluid, tm-container-content -->
 
     <!--공통 footer-->
@@ -151,5 +152,45 @@
             $('body').addClass('loaded');
         });
     </script>-->
+    <script>
+        function updatePrice() {
+            const productCount = document.getElementById("orderCount").value;
+            const productPrice = parseInt([[${mainVo.productPrice}]]);
+            const totalPrice = productCount * productPrice;
+            document.getElementById("productPrice").textContent = totalPrice.toLocaleString() + "원";
+        }
+
+        window.onload = function() {
+            updatePrice();
+        };
+
+        $(document).on("click", "#buy", function() {
+            $.ajax({
+                type: "POST",
+                url: "/buy",
+                data: { /* 구매 정보 */ },
+                success: function(data) {
+                    // 구매 성공 처리
+                },
+                error: function() {
+                    // 구매 실패 처리
+                }
+            });
+        });
+
+        $(document).on("click", "#basket", function() {
+            $.ajax({
+                type: "POST",
+                url: "/basket",
+                data: { /* 구매 정보 */ },
+                success: function(data) {
+                    // 구매 성공 처리
+                },
+                error: function() {
+                    // 구매 실패 처리
+                }
+            });
+        });
+    </script>
 </body>
 </html>
