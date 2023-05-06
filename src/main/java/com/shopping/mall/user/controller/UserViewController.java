@@ -43,7 +43,10 @@ public class UserViewController {
     }
 
     @GetMapping("/userRegister")
-    public String userRegister(HttpServletRequest request){
+    public String userRegister(HttpServletRequest request,
+                               Model model,
+                               @RequestParam(required = false) String email,
+                               @RequestParam(required = false) String profile_nickname){
 
         HttpSession session = request.getSession();
 
@@ -51,6 +54,13 @@ public class UserViewController {
             return "redirect:/";
         }
 
+        System.out.println("?");
+        System.out.println(email);
+        System.out.println(profile_nickname);
+        System.out.println("?");
+
+        model.addAttribute("email", email);
+        model.addAttribute("profile_nickname", profile_nickname);
         return "user/userRegister.html";
     }
 
@@ -92,5 +102,61 @@ public class UserViewController {
         model.addAttribute("pageInfo", pageInfo);
 
         return "user/paymentHistory.html";
+    }
+
+    @GetMapping("/basketHistory")
+    public String basketHistory(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+
+        LoginVo loginVo = (LoginVo) session.getAttribute("loginVo");
+
+        if(loginVo == null || loginVo.getUserId() == null){
+            return "redirect:/";
+        }
+
+        int pageSize = 12; // 한 페이지에 보여줄 데이터 개수
+        int totalItemCount = userService.getOrderTotalCount(loginVo.getUserId()); // 전체 데이터 개수
+        int totalPages = (int) Math.ceil((double) totalItemCount / pageSize); // 전체 페이지 개수
+        int startIndex = (pageNum - 1) * pageSize;
+
+        List<PayVo> orderList = userService.getOrderList(startIndex, pageSize, loginVo.getUserId()); // pageNum 에 해당하는 페이지 데이터 가져오기
+
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setPageNum(pageNum);
+        pageInfo.setTotalPages(totalPages);
+
+        model.addAttribute("orderList", orderList);
+        model.addAttribute("pageInfo", pageInfo);
+
+        return "user/basketHistory.html";
+    }
+
+    @GetMapping("/viewHistory")
+    public String viewHistory(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpServletRequest request){
+
+        HttpSession session = request.getSession();
+
+        LoginVo loginVo = (LoginVo) session.getAttribute("loginVo");
+
+        if(loginVo == null || loginVo.getUserId() == null){
+            return "redirect:/";
+        }
+
+        int pageSize = 12; // 한 페이지에 보여줄 데이터 개수
+        int totalItemCount = userService.getOrderTotalCount(loginVo.getUserId()); // 전체 데이터 개수
+        int totalPages = (int) Math.ceil((double) totalItemCount / pageSize); // 전체 페이지 개수
+        int startIndex = (pageNum - 1) * pageSize;
+
+        List<PayVo> orderList = userService.getOrderList(startIndex, pageSize, loginVo.getUserId()); // pageNum 에 해당하는 페이지 데이터 가져오기
+
+        PageInfo pageInfo = new PageInfo();
+        pageInfo.setPageNum(pageNum);
+        pageInfo.setTotalPages(totalPages);
+
+        model.addAttribute("orderList", orderList);
+        model.addAttribute("pageInfo", pageInfo);
+
+        return "user/viewHistory.html";
     }
 }

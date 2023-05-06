@@ -1,7 +1,5 @@
 package com.shopping.mall.login.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shopping.mall.configuration.SHA256;
 import com.shopping.mall.login.service.LoginService;
 import com.shopping.mall.login.vo.LoginVo;
@@ -9,15 +7,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 
 @AllArgsConstructor
@@ -84,23 +78,24 @@ public class LoginController {
     }
 
     @PostMapping("/kakaoLogin")
-    public String kakaoLogin(@RequestParam String accessToken,
-                             @RequestParam String refreshToken,
-                             @RequestParam String tokenType,
-                             @RequestParam Long expiresIn,
-                             @RequestParam Long refreshTokenExpiresIn,
-                             @RequestParam(required = false) String email,
-                             @RequestParam(required = false) String profile_image,
-                             @RequestParam(required = false) String birthday,
-                             @RequestParam(required = false) String profile_nickname) {
+    public String kakaoLogin(@RequestParam(required = false) String email,
+                            /*@RequestParam(required = false) String profile_image,*/
+                            /*@RequestParam(required = false) String birthday,*/
+                             @RequestParam(required = false) String profile_nickname,
+                             HttpServletRequest request,
+                             RedirectAttributes redirectAttributes) {
 
-        // 받아온 데이터 처리
+        HttpSession session = request.getSession();
 
-        System.out.println(email);
-        System.out.println(profile_image);
-        System.out.println(birthday);
-        System.out.println(profile_nickname);
+        LoginVo loginVo = loginService.emailCheck(email);
 
-        return "success";
+        if (loginVo == null) {
+            redirectAttributes.addAttribute("email", email);
+            redirectAttributes.addAttribute("profile_nickname", profile_nickname);
+            return "0"; // 회원정보없음 회원가입 페이지로 email, profile_nickname 가지고 가야함
+        } else {
+            session.setAttribute("loginVo", loginVo);
+            return "1"; // 로그인 성공
+        }
     }
 }

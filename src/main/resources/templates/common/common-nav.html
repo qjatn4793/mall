@@ -43,6 +43,8 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" th:href="@{/userMypage}">마이페이지</a>
                         <a class="dropdown-item" th:href="@{/paymentHistory}">주문내역</a>
+                        <a class="dropdown-item" th:href="@{/basketHistory}">장바구니</a>
+                        <a class="dropdown-item" th:href="@{/viewHistory}">최근 본 상품</a>
                     </div>
                 </li>
                 <li class="nav-item" th:if="${loginVo != null}">
@@ -54,9 +56,11 @@
         </div>
     </div>
     <script>
+        // SDK 초기화
+        Kakao.init('8dd884d05fa172554d6846cd45ea9f5e');
+
         //로그아웃
         function userLogout(){
-
             var url = $(location).attr('href');
 
             $.ajax({
@@ -70,6 +74,7 @@
                 success : function(data){
                     if(data == "logout"){
                         alert("로그아웃 성공");
+                        Kakao.Auth.logout();
 
                         if(url != ""){
                             sessionStorage.clear();

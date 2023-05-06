@@ -169,16 +169,11 @@ public class UserController {
     }
 
     @PostMapping("/buy")
-    @ResponseBody
     public int buy(@RequestBody PayVo payVo, HttpServletRequest request) {
         LoginVo loginVo = (LoginVo)request.getSession().getAttribute("loginVo");
         if(loginVo == null || loginVo.getUserId() == null) {
             return 0; // 로그인정보 비어있음
         }else {
-            //System.out.println(loginVo.getUserId());
-            //System.out.println(payVo.getProductSeq());
-            //System.out.println(payVo.getOrderCount());
-
 
             MainVo mainVo = mainService.getMainDetail(payVo.getProductSeq());
             String orderUserId = loginVo.getUserId();
@@ -230,5 +225,24 @@ public class UserController {
     public TermsVo terms(@RequestParam("termsSeq") int termsSeq) {
         TermsVo termsVo = userService.getTerms(termsSeq);
         return termsVo;
+    }
+
+    @PostMapping("/basket")
+    public int basket(@RequestBody PayVo payVo, HttpServletRequest request) {
+        LoginVo loginVo = (LoginVo)request.getSession().getAttribute("loginVo");
+        if(loginVo == null || loginVo.getUserId() == null) {
+            return 0; // 로그인정보 비어있음
+        }
+
+
+
+
+
+
+
+
+
+
+        return 1;
     }
 }

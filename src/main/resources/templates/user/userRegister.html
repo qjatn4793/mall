@@ -20,7 +20,8 @@
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="userName" type="text" placeholder="이름을 입력해 주세요" maxlength="10"/>
+                                                        <!--<input class="form-control" id="userName" type="text" placeholder="이름을 입력해 주세요" maxlength="10"/>-->
+                                                        <input class="form-control" id="userName" type="text" name="userName" th:value="${profile_nickname}" placeholder="이메일 주소를 입력해 주세요" th:readonly="${profile_nickname != null and profile_nickname != ''}">
                                                         <label for="userName">이름</label>
                                                     </div>
                                                 </div>
@@ -31,10 +32,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!--<div class="form-floating mb-3">
-                                                <input class="form-control" id="userBirth" type="text" placeholder="생년월일을 - 없이 입력해 주세요 (예 : 20220101)" maxlength="8"/>
-                                                <label for="userBirth">생년월일을 - 없이 입력해 주세요 (예 : 20220101)</label>
-                                            </div>-->
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
@@ -44,7 +41,8 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="userEmail" type="text" placeholder="이메일 주소를 입력해 주세요" minlength="10" maxlength="50"/>
+                                                        <!--<input class="form-control" id="userEmail" type="text" placeholder="이메일 주소를 입력해 주세요" minlength="10" maxlength="50"/>-->
+                                                        <input class="form-control" id="userEmail" type="email" name="email" th:value="${email}" placeholder="이메일 주소를 입력해 주세요" th:readonly="${email != null and email != ''}">
                                                         <label for="userEmail">이메일 주소를 입력해 주세요</label>
                                                     </div>
                                                 </div>

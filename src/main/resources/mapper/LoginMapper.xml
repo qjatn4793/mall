@@ -21,4 +21,8 @@
     <update id="updateLoginDate" parameterType="com.shopping.mall.login.vo.LoginVo">
         UPDATE user SET login_date = NOW() WHERE user_id = #{userId}
     </update>
+
+    <select id="emailCheck" parameterType="string" resultType="com.shopping.mall.login.vo.LoginVo">
+        SELECT user_seq, user_id, user_name, user_birth, user_phone, user_email, user_profile, status FROM user WHERE user_email = #{userEmail}
+    </select>
 </mapper>

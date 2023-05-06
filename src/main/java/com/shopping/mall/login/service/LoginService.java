@@ -33,4 +33,8 @@ public class LoginService {
         return loginMapper.updateLoginDate(loginVo);
     }
 
+    public LoginVo emailCheck(String userEmail){
+
+        return loginMapper.emailCheck(userEmail);
+    }
 }

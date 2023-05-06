@@ -15,9 +15,10 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userLoginCheckInterceptor)
                 .addPathPatterns("/userMypage")
-                .addPathPatterns("/buy")
                 .addPathPatterns("/uploadProfileImg")
-                .addPathPatterns("/paymentHistory");
+                .addPathPatterns("/paymentHistory")
+                .addPathPatterns("/basketHistory")
+                .addPathPatterns("/viewHistory");
 
     }
 }

@@ -37,7 +37,6 @@
         </main>
     </div>
 </div>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script th:inline="javascript">
     function loginEnterKey() {
         if(window.event.keyCode==13){
@@ -81,6 +80,7 @@
             },
             success: function (data) {
                 if (data == "1") {
+                    alert("로그인 되었습니다.");
                     if (document.referrer.indexOf('userRegister') !== -1) {
                         location.href = '/';
                     }
@@ -107,14 +107,14 @@
         container: '#kakao-login-btn',
         success: function(authObj) {
             // 로그인 성공시 처리 코드
-            console.log(JSON.stringify(authObj));
+            //console.log(JSON.stringify(authObj));
 
             // 토큰으로 서버에 로그인 요청
-            var accessToken = authObj.access_token;
-            var refreshToken = authObj.refresh_token;
-            var tokenType = authObj.token_type;
-            var expiresIn = authObj.expires_in;
-            var refreshTokenExpiresIn = authObj.refresh_token_expires_in;
+            //var accessToken = authObj.access_token;
+            //var refreshToken = authObj.refresh_token;
+            //var tokenType = authObj.token_type;
+            //var expiresIn = authObj.expires_in;
+            //var refreshTokenExpiresIn = authObj.refresh_token_expires_in;
 
             // 사용자 정보 요청
             Kakao.API.request({
@@ -128,19 +128,25 @@
                         type: "POST",
                         url: "/kakaoLogin",
                         data: {
-                            accessToken: accessToken,
-                            refreshToken: refreshToken,
-                            tokenType: tokenType,
-                            expiresIn: expiresIn,
-                            refreshTokenExpiresIn: refreshTokenExpiresIn,
                             email: response.kakao_account.email, // 사용자 이메일 주소 전달
-                            profile_image: response.kakao_account.profile.profile_image_url, // 사용자 프로필 이미지 URL 전달
-                            birthday: response.kakao_account.birthday, // 사용자 생일 전달
                             profile_nickname: response.kakao_account.profile.nickname // 사용자 닉네임 전달
                         },
                         success: function(data) {
                             // 로그인 처리 후 리다이렉트 등 필요한 작업 수행
                             console.log(data);
+                            if (data == 1) {
+                                alert("로그인 되었습니다.");
+                                if (document.referrer.indexOf('userRegister') !== -1) {
+                                    location.href = '/';
+                                }
+
+                                location.replace(document.referrer);
+                            }else {
+                                alert("회원정보가 없습니다. 회원가입 후 이용해주세요");
+                                //alert("email: " + response.kakao_account.email + ", profile_nickname: " + response.kakao_account.profile.nickname);
+                                //location.href = "/userRegister";
+                                location.href = "userRegister?email=" + response.kakao_account.email + "&profile_nickname=" + response.kakao_account.profile.nickname;
+                            }
                         },
                         error: function(xhr, status, error) {
                             // 로그인 실패시 처리 코드
@@ -158,8 +164,14 @@
             // 로그인 실패시 처리 코드
             console.log(JSON.stringify(err));
         },
-        scope: 'account_email, profile_image, birthday, profile_nickname' // 사용자 정보 관련 스코프 추가
+        scope:
+            'account_email, ' +
+            /*'profile_image, ' +*/
+            /*'birthday, ' +*/
+            'profile_nickname' // 사용자 정보 관련 스코프 추가
     });
+
+
 </script>
 </body>
 </html>

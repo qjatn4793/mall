@@ -15,5 +15,7 @@ public interface LoginMapper {
     LoginVo userInfo(String userId);
 
     int updateLoginDate(LoginVo loginVo);
+
+    LoginVo emailCheck(String userEmail);
     
 }
