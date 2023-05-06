@@ -1,29 +1,24 @@
 package com.shopping.mall.login.controller;
 
-import com.shopping.mall.configuration.PasswordUtil;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shopping.mall.configuration.SHA256;
 import com.shopping.mall.login.service.LoginService;
 import com.shopping.mall.login.vo.LoginVo;
 import lombok.AllArgsConstructor;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.NoSuchAlgorithmException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import static java.lang.String.valueOf;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 
 @AllArgsConstructor
 @RestController
@@ -88,125 +83,24 @@ public class LoginController {
         return "logout";
     }
 
-    @PostMapping("/userIdCheck")
-    public int userIdCheck(@RequestBody LoginVo loginVo){
+    @PostMapping("/kakaoLogin")
+    public String kakaoLogin(@RequestParam String accessToken,
+                             @RequestParam String refreshToken,
+                             @RequestParam String tokenType,
+                             @RequestParam Long expiresIn,
+                             @RequestParam Long refreshTokenExpiresIn,
+                             @RequestParam(required = false) String email,
+                             @RequestParam(required = false) String profile_image,
+                             @RequestParam(required = false) String birthday,
+                             @RequestParam(required = false) String profile_nickname) {
 
-        String userId = loginVo.getUserId();
+        // 받아온 데이터 처리
 
-        final String checkString = "[a-zA-Z0-9ㄱ-힣\\s]"; // 특수문자 체크
+        System.out.println(email);
+        System.out.println(profile_image);
+        System.out.println(birthday);
+        System.out.println(profile_nickname);
 
-        Matcher matchTest2;
-        matchTest2 = Pattern.compile(checkString).matcher(userId); // ID 공백 포함 특수문자 없으면 true
-
-        if (matchTest2.find() == true) {
-            return loginService.userIdCheck(loginVo);
-        }else {
-            return 0;
-        }
+        return "success";
     }
-
-    @PostMapping("/userRegister")
-    public int userRegister(@RequestBody LoginVo loginVo){
-
-        String userId = loginVo.getUserId();
-        String userBirth = loginVo.getUserBirth();
-        String userName = loginVo.getUserName();
-        String userPhone = loginVo.getUserPhone();
-
-        final String checkNum = "[0-9]+"; // 숫자만 있는지 체크
-        final String checkString = "[a-zA-Z0-9ㄱ-힣\\s]"; // 특수문자 체크
-        final String checkString2 = "[A-Za-z0-9]"; // 숫자 문자 포함 체크
-
-        Matcher matchTest;
-        Matcher matchTest2;
-        Matcher matchTest3;
-        matchTest = Pattern.compile(checkString).matcher(userName); // 이름 공백 포함 특수문자가 없으면 true
-        matchTest2 = Pattern.compile(checkString).matcher(userId); // ID 공백 포함 특수문자 없으면 true
-        matchTest3 = Pattern.compile(checkString2).matcher(userId); // ID 에 문자 숫자 포함일경우 true
-
-        if (loginService.userIdCheck(loginVo) == 0) { // 유저 중복 체크 0 일경우 없음
-            if (Pattern.matches(checkNum, userBirth) && Pattern.matches(checkNum, userPhone)) { // 생년월일 숫자만 있는지 체크 휴대폰번호 숫자만 있는지 체크
-                if (matchTest.find() == true && matchTest2.find() == true && matchTest3.find() == true) { //이름 공백 포함 특수문자가 없으면 true, ID 공백 포함 특수문자 없으면 true, ID 에 문자 숫자 포함일경우 true
-
-                    String encryptedPassword = PasswordUtil.sha256(loginVo.getUserPw()); // 패스워드 암호화
-
-                    loginVo.setUserPw(encryptedPassword);
-
-                    return loginService.userRegister(loginVo);
-                } else {
-                    return 0;
-                }
-            } else {
-                return 0;
-            }
-        }else {
-            return 0;
-        }
-    }
-
-    @PutMapping("/userRegister")
-    public int userUpdate(HttpServletRequest request, @RequestBody LoginVo loginVo){
-
-        HttpSession session = request.getSession();
-        SHA256 sha256 = new SHA256();
-
-        if (loginService.userIdCheck(loginVo) == 1) { // 유저 중복 체크 1 일경우 있음
-
-            try {
-                loginVo.setUserPw(sha256.encrypt(loginVo.getUserPw()));
-            }catch (Exception e) {
-                System.out.println(e);
-            }
-
-            int userUpdate = loginService.userUpdate(loginVo);
-
-            if (userUpdate == 1) {
-                session.removeAttribute("loginVo");
-                session.invalidate();
-                return userUpdate;
-            } else {
-                return 0;
-            }
-        }else {
-            return 0;
-        }
-    }
-
-    @PostMapping("/uploadProfileImg")
-    public ResponseEntity<String> uploadProfileImg(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
-
-        LoginVo loginVo = new LoginVo();
-
-        Path path = Paths.get("/manager/image/user" + "/" + file.getOriginalFilename());
-
-        LoginVo sessionLoginVo = (LoginVo)request.getSession().getAttribute("loginVo");
-
-        loginVo.setUserProfile(path.toString());
-        loginVo.setUserId(sessionLoginVo.getUserId());
-
-        loginService.updateUserImg(loginVo);
-
-        return uploadFile(file, request);
-    }
-
-    /*파일업로드 공통 메소드*/
-    private ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) {
-        try {
-            String uploadDir = env.getProperty("shared.image.upload-dir");
-            String filename = file.getOriginalFilename();
-            String extension = FilenameUtils.getExtension(filename);
-            if (!extension.equalsIgnoreCase("jpg") && !extension.equalsIgnoreCase("png")) {
-                request.getSession().invalidate();
-                return ResponseEntity.badRequest().body("Only jpg or png files are allowed");
-            }
-            Path path = Paths.get(uploadDir + "/user/" + filename);
-            Files.write(path, file.getBytes());
-            request.getSession().invalidate();
-            return ResponseEntity.ok("File uploaded successfully");
-        } catch (IOException e) {
-            request.getSession().invalidate();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file");
-        }
-    }
-
 }

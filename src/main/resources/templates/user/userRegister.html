@@ -44,7 +44,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="userEmail" type="text" placeholder="이메일 주소를 입력해 주세요" minlength="10" maxlength="20"/>
+                                                        <input class="form-control" id="userEmail" type="text" placeholder="이메일 주소를 입력해 주세요" minlength="10" maxlength="50"/>
                                                         <label for="userEmail">이메일 주소를 입력해 주세요</label>
                                                     </div>
                                                 </div>
@@ -64,15 +64,69 @@
                                                 </div>
                                             </div>
                                             <p id = "checkPw" size = "2"></p>
+
+                                            <!--약관-->
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="agreeAll">
+                                                <label class="form-check-label" for="agreeAll">
+                                                    전체 동의
+                                                </label>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="agreeAge">
+                                                <label class="form-check-label" for="agreeAge">
+                                                    [필수] 만 14세 이상입니다.
+                                                </label>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="agreeTerms">
+                                                <label class="form-check-label" for="agreeTerms">
+                                                    [필수] 몰, 몰 스토어 이용 약관
+                                                    <a href="#" id="agreeTerms_detail" data-bs-toggle="modal" data-bs-target="#modalTerms">자세히</a>
+                                                </label>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="agreePrivacy">
+                                                <label class="form-check-label" for="agreePrivacy">
+                                                    [필수] 개인정보 수집 및 이용 동의
+                                                    <a href="#" id="agreePrivacy_detail" data-bs-toggle="modal" data-bs-target="#modalTerms">자세히</a>
+                                                </label>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="agreeAd">
+                                                <label class="form-check-label" for="agreeAd">
+                                                    [선택] 광고성 정보 수신 동의
+                                                </label>
+                                            </div>
+                                            <!--약관-->
                                             <div class="mt-4 mb-0">
                                                 <div class="d-grid"><button class="btn btn-primary btn-block" onclick="userRegister()">회원 가입</button></div>
                                             </div>
                                         <!--</form>-->
                                     </div>
                                     <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="/login">Have an account? Go to login</a></div>
+                                        <div class="small"><a href="/login">로그인 페이지로 가기</a></div>
                                     </div>
                                     <a class="badge bg-secondary text-decoration-none link-light" href="/" >메인으로 돌아가기</a>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="modalTerms" tabindex="-1" aria-labelledby="modalTermsLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalTermsLabel"><!--약관 내용--></h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!--<p>약관 내용을 여기에 작성합니다.</p>-->
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Modal 끝-->
                                 </div>
                             </div>
                         </div>
@@ -80,6 +134,8 @@
                 </main>
             </div>
         </div>
+        <!-- Bootstrap JavaScript 파일 등록 -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
         <script>
             function userIdCheck() {
                 var userId = $("#userId").val();
@@ -108,7 +164,7 @@
                                 $("#checkId").css("color", "red");
                             }
                         }else {
-                            $("#checkId").html("ID 는 숫자 포함 5자리 이상이어야 합니다.");
+                            $("#checkId").html("ID 는 한글은 입력이 안되며, 영문 숫자조합 5자리 이상이어야 합니다.");
                             $("#checkId").css("color", "red");
                         }
                     }
@@ -136,6 +192,19 @@
 
             function userRegister(){
 
+                if ($('#agreeAge').is(":checked") == false) {
+                    alert("[필수] 만 14세 이상입니다. 를 체크해주세요.");
+                    return false;
+                }
+                if ($('#agreeTerms').is(":checked") == false) {
+                    alert("[필수] 몰, 몰 스토어 이용 약관에 동의해주세요.");
+                    return false;
+                }
+                if ($('#agreePrivacy').is(":checked") == false) {
+                    alert("[필수] 개인정보 수집 및 이용 동의에 동의해주세요.");
+                    return false;
+                }
+
                 var userId = $("#userId").val();
                 var userPw = $("#userPw").val();
                 var userPwConfirm = $("#userPwConfirm").val();
@@ -143,6 +212,7 @@
                 var userBirth = $("#userBirth").val();
                 var userPhone = $("#userPhone").val();
                 var userEmail = $("#userEmail").val();
+                var adYn = $('#agreePrivacy').is(":checked") ? 'Y' : 'N';
 
                 var numCheck = /^[0-9]+$/;
                 var emailCheck = /\S+@\S+\.\S+/;
@@ -204,7 +274,8 @@
                                             "userBirth": userBirth,
                                             "userPhone": userPhone,
                                             "userEmail": userEmail,
-                                            "status": 1
+                                            "status": 1,
+                                            "adYn" : adYn
                                         }),
                                         async: false,
                                         error: function () {
@@ -236,6 +307,83 @@
                     alert("빈 칸을 모두 채워주세요!");
                 }
             }
+
+            //var bsModal = new bootstrap.Modal(modal[0]);
+            var modal = $('#modalTerms');
+
+            function showModal(title, content) {
+                $('.modal-title').text(title);
+                $('.modal-body').text(content);
+                modal.show();
+            }
+
+            $('#modalTerms .btn-close').click(function() {
+                modal.hide();
+                $('#modalTerms').modal('hide');
+            });
+
+            $('#agreeTerms_detail').click(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "/terms",
+                    contentType: "application/json",
+                    data: {
+                        termsSeq: 1
+                    },
+                    async: false,
+                    error: function () {
+                        alert('약관을 가져오는데에 실패하였습니다.');
+                    },
+                    success: function (data) {
+                        const termsContents = data.termsContents.replace(/\n/g, '<br>');
+                        const modalBodyEl = document.querySelector('#modalTerms .modal-body');
+                        modalBodyEl.innerHTML = termsContents;
+                        showModal(data.termsTitle);
+                    }
+                });
+            });
+
+            $('#agreePrivacy_detail').click(function() {
+                $.ajax({
+                    type: "GET",
+                    url: "/terms",
+                    contentType: "application/json",
+                    data: {
+                        termsSeq: 2
+                    },
+                    async: false,
+                    error: function () {
+                        alert('약관을 가져오는데에 실패하였습니다.');
+                    },
+                    success: function (data) {
+                        const termsContents = data.termsContents.replace(/\n/g, '<br>');
+                        const modalBodyEl = document.querySelector('#modalTerms .modal-body');
+                        modalBodyEl.innerHTML = termsContents;
+                        showModal(data.termsTitle);
+                    }
+                });
+            });
+
+            $(function() {
+                // 전체동의 체크박스를 클릭했을 때
+                $('#agreeAll').click(function() {
+                    // 전체 체크박스 상태를 저장할 변수
+                    var allChecked = $(this).is(':checked');
+
+                    // 모든 체크박스를 전체 체크박스와 같은 상태로 변경
+                    $('input[type="checkbox"]').prop('checked', allChecked);
+                });
+
+                // 개별 체크박스를 클릭했을 때
+                $('input[type="checkbox"]').not('#agreeAll').click(function() {
+                    // 모든 체크박스가 선택되어 있는지 확인
+                    var allChecked = ($('input[type="checkbox"]').not('#agreeAll').filter(':not(:checked)').length == 0);
+
+                    // 전체동의 체크박스 상태를 변경
+                    $('#agreeAll').prop('checked', allChecked);
+                });
+            });
+
         </script>
     </body>
 </html>

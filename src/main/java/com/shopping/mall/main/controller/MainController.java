@@ -28,39 +28,11 @@ public class MainController {
     @Autowired
     private Environment env;
 
-    @Autowired
-    private MainService mainService;
-
-    @GetMapping("/manager/image/{filename:.+}")
-    public void getImage(@PathVariable String filename, HttpServletResponse response) {
+    @GetMapping("/manager/image/{contents}/{filename:.+}")
+    public void getImage(@PathVariable String contents, @PathVariable String filename, HttpServletResponse response) {
 
         String uploadDir = env.getProperty("shared.image.upload-dir");
-        Path path = Paths.get(uploadDir + "/" + filename);
-
-        try {
-            InputStream inputStream = Files.newInputStream(path);
-            if (filename.endsWith(".jpg") || filename.endsWith(".jpeg")) {
-                response.setContentType("image/jpeg");
-            } else if (filename.endsWith(".png")) {
-                response.setContentType("image/png");
-            } else if (filename.endsWith(".gif")) {
-                response.setContentType("image/gif");
-            } else if (filename.endsWith(".bmp")) {
-                response.setContentType("image/bmp");
-            } else {
-                response.setContentType("application/octet-stream");
-            }
-            IOUtils.copy(inputStream, response.getOutputStream()); // 이미지 파일 전송
-        } catch (IOException e) {
-            // 예외 처리
-        }
-    }
-
-    @GetMapping("/manager/image/user/{filename:.+}")
-    public void getUserImage(@PathVariable String filename, HttpServletResponse response) {
-
-        String uploadDir = env.getProperty("shared.image.upload-dir");
-        Path path = Paths.get(uploadDir + "/user/" + filename);
+        Path path = Paths.get(uploadDir + "/" + contents + "/" + filename);
 
         try {
             InputStream inputStream = Files.newInputStream(path);

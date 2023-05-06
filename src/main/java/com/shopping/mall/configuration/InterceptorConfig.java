@@ -14,6 +14,10 @@ public class InterceptorConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userLoginCheckInterceptor)
-                .addPathPatterns("/userMypage");
+                .addPathPatterns("/userMypage")
+                .addPathPatterns("/buy")
+                .addPathPatterns("/uploadProfileImg")
+                .addPathPatterns("/paymentHistory");
+
     }
 }

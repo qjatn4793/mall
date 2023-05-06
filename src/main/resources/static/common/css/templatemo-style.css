@@ -668,3 +668,104 @@ select:not([multiple]) {
 .font-3xl {
     font-size: 2.8125em;
 }
+
+.custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: #007bff;
+    border-color: #007bff;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.custom-file-upload:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+/* Stats Table */
+.table-stats table {
+    font-family: 'Open Sans'; }
+.table-stats table th,
+.table-stats table td {
+    border: none;
+    border-bottom: 1px solid #e8e9ef;
+    color: #868e96;
+    font-size: 12px;
+    font-weight: normal;
+    padding: .75em 1.25em;
+    text-transform: uppercase; }
+.table-stats table th img,
+.table-stats table td img {
+    margin-right: 10px;
+    max-width: 45px; }
+.table-stats table th .name,
+.table-stats table td .name {
+    color: #343a40;
+    font-size: 14px;
+    text-transform: capitalize; }
+.table-stats table td {
+    color: #343a40;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: capitalize;
+    vertical-align: middle; }
+
+/*페이징 처리 디자인*/
+
+.pagination {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination ul {
+    display: inline-flex;
+    padding: 0;
+    margin: 0;
+}
+
+.pagination li {
+    display: flex;
+    margin-right: 5px;
+}
+
+.pagination li:last-child {
+    margin-right: 0;
+}
+
+.pagination a {
+    color: #000;
+    padding: 3px 8px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.badge-danger {
+    color: #fff;
+    background-color: #dc3545
+}
+
+.badge-danger[href]:focus, .badge-danger[href]:hover {
+    color: #fff;
+    text-decoration: none;
+    background-color: #bd2130
+}
+
+#kakao-login-btn {
+    background-color: transparent;
+    border: none;
+    display:block;
+}

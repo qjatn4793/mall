@@ -22,16 +22,6 @@ public class MainViewController {
     @Autowired
     MainService mainService;
 
-    /*@RequestMapping("/")
-    public String main(@RequestParam("pageNum") int pageNum, Model model){
-
-        List<MainVo> mainList = mainService.getMainList();
-
-        model.addAttribute("mainList", mainList);
-
-        return "main/main.html";
-    }*/
-
     @RequestMapping("/")
     public String main(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpServletRequest request){
 

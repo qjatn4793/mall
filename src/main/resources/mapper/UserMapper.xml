@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.shopping.mall.user.mapper.UserMapper">
+
+    <resultMap id="orderResultMap" type="com.shopping.mall.user.vo.PayVo">
+        <id property="orderSeq" column="order_seq"/>
+        <result property="orderUserId" column="order_user_id"/>
+        <result property="orderRegDate" column="order_regDate"/>
+        <result property="orderStatus" column="order_status"/>
+        <result property="orderCount" column="order_count"/>
+        <result property="productSeq" column="product_seq"/>
+        <result property="productTitle" column="product_title"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="categorySeq" column="category_seq"/>
+        <result property="categoryName" column="category_name"/>
+    </resultMap>
+
+    <select id="userIdCheck" parameterType="com.shopping.mall.login.vo.LoginVo" resultType="Integer">
+        SELECT COUNT(*) FROM user WHERE user_id = #{userId}
+    </select>
+
+    <insert id="userRegister" parameterType="com.shopping.mall.login.vo.LoginVo">
+        INSERT INTO user (user_id, user_pw, user_name, user_birth, user_phone, user_email, reg_date, ad_yn) VALUES (#{userId},#{userPw},#{userName},#{userBirth},#{userPhone}, #{userEmail}, NOW(), #{adYn})
+    </insert>
+
+    <update id="userUpdate" parameterType="com.shopping.mall.login.vo.LoginVo">
+        UPDATE user SET user_name = #{userName}, user_pw = #{userPw}, user_birth = #{userBirth}, user_phone = #{userPhone} WHERE user_id = #{userId}
+    </update>
+
+    <update id="updateUserImg" parameterType="com.shopping.mall.login.vo.LoginVo">
+        UPDATE user SET user_profile = #{userProfile} WHERE user_id = #{userId}
+    </update>
+
+    <insert id="insertOrder" parameterType="com.shopping.mall.user.vo.PayVo">
+        INSERT INTO product_order (order_user_id, order_regDate, order_count, product_seq) VALUES (#{orderUserId}, NOW(), #{orderCount}, #{productSeq})
+    </insert>
+
+    <update id="updateUserTotalPrice" parameterType="com.shopping.mall.user.vo.PayVo">
+      UPDATE user SET total_price = total_price + #{orderPrice} WHERE user_id = #{orderUserId}
+    </update>
+
+    <select id="getOrderList" resultMap="orderResultMap">
+      SELECT * FROM product_order
+      WHERE order_user_id = #{userId}
+      LIMIT #{startIndex}, #{pageSize}
+    </select>
+
+    <select id="getSelectVo" parameterType="int" resultType="com.shopping.mall.user.vo.PayVo">
+      SELECT category_seq, product_price, product_title FROM product_contents WHERE product_seq=#{productSeq}
+    </select>
+
+    <select id="getOrderTotalCount" parameterType="string" resultType="int">
+      SELECT COUNT(*) FROM product_order
+      WHERE order_user_id = #{userId}
+    </select>
+
+    <select id="getCategoryName" resultType="string">
+      SELECT category_name FROM category
+      WHERE category_seq = #{categorySeq}
+    </select>
+
+    <select id="selectOrderVo" parameterType="int" resultType="com.shopping.mall.user.vo.PayVo">
+      SELECT * FROM product_order WHERE order_seq=#{orderSeq}
+    </select>
+
+    <update id="cancleOrder" parameterType="com.shopping.mall.user.vo.PayVo">
+      UPDATE user SET total_price = total_price - #{productPrice} WHERE user_id = #{orderUserId}
+    </update>
+
+    <update id="updateProductCount" parameterType="com.shopping.mall.user.vo.PayVo">
+      UPDATE product_contents SET product_count = product_count + #{orderCount} WHERE product_seq=#{productSeq}
+    </update>
+
+    <update id="updateOrderStatus" parameterType="com.shopping.mall.user.vo.PayVo">
+      UPDATE product_order SET order_status = #{orderStatus}, order_updateDate = NOW() WHERE order_seq=#{orderSeq}
+    </update>
+
+    <select id="getTerms" parameterType="int" resultType="com.shopping.mall.user.vo.TermsVo">
+      SELECT * FROM terms where terms_seq = #{termsSeq}
+    </select>
+</mapper>

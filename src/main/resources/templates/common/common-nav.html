@@ -36,10 +36,14 @@
                         Login
                     </a>
                 </li>
-                <li class="nav-item" th:if="${loginVo != null}">
-                    <a class="nav-link nav-link-5" th:href="@{/userMypage}">
+                <li class="nav-item dropdown" th:if="${loginVo != null}">
+                    <a class="nav-link dropdown-toggle nav-link-5" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         MyPage
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/userMypage}">마이페이지</a>
+                        <a class="dropdown-item" th:href="@{/paymentHistory}">주문내역</a>
+                    </div>
                 </li>
                 <li class="nav-item" th:if="${loginVo != null}">
                     <a class="nav-link nav-link-6" href="#" onclick="userLogout()">

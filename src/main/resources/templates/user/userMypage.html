@@ -14,8 +14,11 @@
                                         <div class="text-center mb-3">
                                             <img id="profileImg" th:src="${loginVo.userProfile}" onerror="this.onerror=null; this.src='common/img/profile.jpg'" class="rounded-circle img-fluid" alt="Profile image" style="width: 128px; height: 128px;">
                                             <form id="form1" method="post" action="/uploadProfileImg" enctype="multipart/form-data" class="mt-3">
-                                                <input type="file" name="file"><br/><br/>
-                                                <button type="submit" class="btn btn-primary" style="width:100%">이미지 변경</button>
+                                                <label for="file" class="custom-file-upload">
+                                                    <i class="fas fa-cloud-upload-alt"></i> 파일 선택
+                                                </label>
+                                                <input id="file" type="file" name="file" style="display: none;"><br><br>
+                                                <button type="submit" class="btn btn-primary" style="width:100%">프로필 이미지 변경</button>
                                             </form>
                                         </div>
                                         <div class="row mb-3">
@@ -61,8 +64,9 @@
                                             <button id="userUpdateToggle" class="btn btn-primary btn-block" onclick="userUpdateToggle()">회원정보수정</button>
                                             <button id="userUpdate" class="btn btn-primary btn-block" style="display:none;" onclick="userUpdate()">회원정보수정완료</button>
                                         </div>
+                                        <a class="badge bg-secondary text-decoration-none link-light mt-3" href="/paymentHistory" >주문내역</a>
+                                        <a class="badge bg-secondary text-decoration-none link-light" href="/" >메인으로 돌아가기</a>
                                     </div>
-                                    <a class="badge bg-secondary text-decoration-none link-light" href="/" >메인으로 돌아가기</a>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +80,13 @@
                 e.preventDefault(); // 기본 동작 방지
 
                 let formData = new FormData(jQuery(this)[0]);
+                let fileInput = jQuery('input[type="file"]')[0];
                 let actionUrl = jQuery(this).attr('action');
+
+                if (fileInput.files.length === 0) {
+                    alert('선택된 파일이 없습니다.');
+                    return;
+                }
 
                 jQuery.ajax({
                     url: actionUrl,

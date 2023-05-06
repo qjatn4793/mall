@@ -1,6 +1,7 @@
 package com.shopping.mall.main.mapper;
 
 import com.shopping.mall.main.vo.MainVo;
+import com.shopping.mall.user.vo.PayVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -24,4 +25,6 @@ public interface MainMapper {
     List<MainVo> getMainPreview(int productSeq);
 
     List<MainVo> search(String searchWord);
+
+    int updateProductCount(PayVo payVo);
 }

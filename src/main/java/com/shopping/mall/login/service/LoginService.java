@@ -23,29 +23,9 @@ public class LoginService {
         return loginMapper.userSelectOne(userId);
     }
 
-    public int userIdCheck(LoginVo loginVo){
-
-        return loginMapper.userIdCheck(loginVo);
-    }
-
-    public int userRegister(LoginVo loginVo){
-
-        return loginMapper.userRegister(loginVo);
-    }
-
     public LoginVo userInfo(String userId){
 
         return loginMapper.userInfo(userId);
-    }
-
-    public int userUpdate(LoginVo loginVo){
-
-        return loginMapper.userUpdate(loginVo);
-    }
-
-    public int updateUserImg(LoginVo loginVo) {
-
-        return loginMapper.updateUserImg(loginVo);
     }
 
     public int updateLoginDate(LoginVo loginVo) {

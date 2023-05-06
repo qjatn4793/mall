@@ -14,25 +14,20 @@
                             <div class="card-body">
                                 <div name="userLoginForm" id="userLoginForm">
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="userId" name="userId" type="text" placeholder="id" />
-                                        <label for="userId">id</label>
+                                        <input class="form-control" id="userId" name="userId" type="text" placeholder="아이디" />
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input class="form-control" id="userPw" name="userPw" type="password" placeholder="Password" onkeyup="loginEnterKey()"/>
-                                        <label for="userPw">Password</label>
-                                    </div>
-                                    <div class="form-check mb-3">
-                                        <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                        <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
+                                        <input class="form-control" id="userPw" name="userPw" type="password" placeholder="비밀번호" onkeyup="loginEnterKey()"/>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="/userPassword">Forgot Password?</a>
-                                        <button class="btn btn-primary" onclick="userLogin()">Login</button>
+                                        <button class="btn btn-primary btn-block" style="padding: 7px 50px 14px;" onclick="userLogin()">Login</button>
+                                        <button id="kakao-login-btn"></button>
                                     </div>
+                                    <a style="float: right;" class="small" href="/userPassword">아이디 / 비밀번호 찾기</a>
                                 </div>
                             </div>
                             <div class="card-footer text-center py-3">
-                                <div class="small"><a href="/userRegister">회원가입</a></div>
+                                <div style="margin: 0 auto;"><a href="/userRegister">회원가입</a></div>
                             </div>
                             <a class="badge bg-secondary text-decoration-none link-light" href="/" >메인으로 돌아가기</a>
                         </div>
@@ -42,6 +37,7 @@
         </main>
     </div>
 </div>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script th:inline="javascript">
     function loginEnterKey() {
         if(window.event.keyCode==13){
@@ -50,11 +46,9 @@
     }
 
     //로그인
-    function userLogin(){
-
+    function userLogin() {
         var userId = $("#userId").val();
         var userPw = $("#userPw").val();
-        var referrer = document.referrer;
 
         // 특정 문자열 발견시 공백으로 치환 : userId
         userId = userId.replace(/\</g,'');
@@ -72,33 +66,100 @@
         userId = userId.replace(/\'/g,'');
         userId = userId.replace(/\"/g,'');
 
-
         $.ajax({
-            type : "POST",
-            url : "/login",
-            dataType : "text",
+            type: "POST",
+            url: "/login",
+            dataType: "text",
             contentType: "application/json",
             data: JSON.stringify({
-                "userId" : userId,
-                "userPw" : userPw
+                "userId": userId,
+                "userPw": userPw
             }),
-            async : false,
-            error : function(){
-                alert('로그인을 실패하였습니다. ID 또는 PW를 확인해주세요');
+            async: false,
+            error: function () {
+                alert("로그인을 실패하였습니다. ID 또는 PW를 확인해주세요");
             },
-            success: function(data) {
+            success: function (data) {
                 if (data == "1") {
+                    if (document.referrer.indexOf('userRegister') !== -1) {
+                        location.href = '/';
+                    }
+
                     location.replace(document.referrer);
                 } else if (data == "2") {
-                    alert('블랙리스트로 등록된 사용자 입니다. \n고객센터로 연락주시길 바랍니다.');
+                    alert(
+                        "블랙리스트로 등록된 사용자 입니다. \n고객센터로 연락주시길 바랍니다."
+                    );
                     location.replace("/login");
                 } else {
-                    alert('로그인을 실패하였습니다. ID 또는 PW를 확인해주세요');
+                    alert("로그인을 실패하였습니다. ID 또는 PW를 확인해주세요");
                     location.replace("/login");
                 }
-            }
+            },
         });
     }
+
+    // SDK 초기화
+    Kakao.init('8dd884d05fa172554d6846cd45ea9f5e');
+    //Kakao.init('5fa0c49cbb1239032c8e96a6547f7bb4');
+
+    Kakao.Auth.createLoginButton({
+        container: '#kakao-login-btn',
+        success: function(authObj) {
+            // 로그인 성공시 처리 코드
+            console.log(JSON.stringify(authObj));
+
+            // 토큰으로 서버에 로그인 요청
+            var accessToken = authObj.access_token;
+            var refreshToken = authObj.refresh_token;
+            var tokenType = authObj.token_type;
+            var expiresIn = authObj.expires_in;
+            var refreshTokenExpiresIn = authObj.refresh_token_expires_in;
+
+            // 사용자 정보 요청
+            Kakao.API.request({
+                url: '/v2/user/me',
+                success: function(response) {
+                    // 사용자 정보 처리 코드
+                    console.log(response);
+
+                    // 사용자 정보를 서버로 전달
+                    $.ajax({
+                        type: "POST",
+                        url: "/kakaoLogin",
+                        data: {
+                            accessToken: accessToken,
+                            refreshToken: refreshToken,
+                            tokenType: tokenType,
+                            expiresIn: expiresIn,
+                            refreshTokenExpiresIn: refreshTokenExpiresIn,
+                            email: response.kakao_account.email, // 사용자 이메일 주소 전달
+                            profile_image: response.kakao_account.profile.profile_image_url, // 사용자 프로필 이미지 URL 전달
+                            birthday: response.kakao_account.birthday, // 사용자 생일 전달
+                            profile_nickname: response.kakao_account.profile.nickname // 사용자 닉네임 전달
+                        },
+                        success: function(data) {
+                            // 로그인 처리 후 리다이렉트 등 필요한 작업 수행
+                            console.log(data);
+                        },
+                        error: function(xhr, status, error) {
+                            // 로그인 실패시 처리 코드
+                            console.log(error);
+                        }
+                    });
+                },
+                fail: function(error) {
+                    // 사용자 정보 요청 실패 처리 코드
+                    console.log(error);
+                }
+            });
+        },
+        fail: function(err) {
+            // 로그인 실패시 처리 코드
+            console.log(JSON.stringify(err));
+        },
+        scope: 'account_email, profile_image, birthday, profile_nickname' // 사용자 정보 관련 스코프 추가
+    });
 </script>
 </body>
 </html>

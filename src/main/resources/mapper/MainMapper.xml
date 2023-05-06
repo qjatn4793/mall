@@ -64,4 +64,8 @@
       WHERE product_status = 1
       AND product_title LIKE CONCAT('%', #{searchWord}, '%')
     </select>
+
+    <update id="updateProductCount" parameterType="com.shopping.mall.user.vo.PayVo">
+      UPDATE product_contents SET product_count = product_count - #{orderCount} WHERE product_seq = #{productSeq}
+    </update>
 </mapper>

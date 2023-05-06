@@ -12,15 +12,7 @@ public interface LoginMapper {
 
     String userSelectOne(String userId);
 
-    int userIdCheck(LoginVo loginVo);
-
-    int userRegister(LoginVo loginVo);
-
     LoginVo userInfo(String userId);
-
-    int userUpdate(LoginVo loginVo);
-
-    int updateUserImg(LoginVo loginVo);
 
     int updateLoginDate(LoginVo loginVo);
     

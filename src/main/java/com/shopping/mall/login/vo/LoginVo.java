@@ -21,4 +21,5 @@ public class LoginVo {
     private String regDate;
     private String loginDate;
     private int status;
+    private String adYn;
 }
