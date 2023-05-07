@@ -16,6 +16,13 @@ public interface LoginMapper {
 
     int updateLoginDate(LoginVo loginVo);
 
-    LoginVo emailCheck(String userEmail);
-    
+    LoginVo emailCheck(String email);
+
+    LoginVo kakaoCheck(LoginVo loginVo);
+
+    int updateKakaoId(LoginVo loginVo);
+
+    int insertKakao(LoginVo loginVo);
+
+    int updateKakaoLoginDate(LoginVo loginVo);
 }

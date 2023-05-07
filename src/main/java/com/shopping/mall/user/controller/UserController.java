@@ -48,27 +48,35 @@ public class UserController {
         String userBirth = loginVo.getUserBirth();
         String userName = loginVo.getUserName();
         String userPhone = loginVo.getUserPhone();
+        String userEmail = loginVo.getUserEmail();
 
         final String checkNum = "[0-9]+"; // 숫자만 있는지 체크
         final String checkString = "[a-zA-Z0-9ㄱ-힣\\s]"; // 특수문자 체크
         final String checkString2 = "[A-Za-z0-9]"; // 숫자 문자 포함 체크
+        final String EMAIL_REGEX = "^(.+)@(.+)$";
 
         Matcher matchTest;
         Matcher matchTest2;
         Matcher matchTest3;
+        Matcher matchEmail;
         matchTest = Pattern.compile(checkString).matcher(userName); // 이름 공백 포함 특수문자가 없으면 true
         matchTest2 = Pattern.compile(checkString).matcher(userId); // ID 공백 포함 특수문자 없으면 true
         matchTest3 = Pattern.compile(checkString2).matcher(userId); // ID 에 문자 숫자 포함일경우 true
+        matchEmail = Pattern.compile(EMAIL_REGEX).matcher(userEmail); // Email 규칙이 맞으면 true
 
         if (userService.userIdCheck(loginVo) == 0) { // 유저 중복 체크 0 일경우 없음
             if (Pattern.matches(checkNum, userBirth) && Pattern.matches(checkNum, userPhone)) { // 생년월일 숫자만 있는지 체크 휴대폰번호 숫자만 있는지 체크
-                if (matchTest.find() == true && matchTest2.find() == true && matchTest3.find() == true) { //이름 공백 포함 특수문자가 없으면 true, ID 공백 포함 특수문자 없으면 true, ID 에 문자 숫자 포함일경우 true
+                if (matchTest.find() == true && matchTest2.find() == true && matchTest3.find() == true && matchEmail.find() == true) { //이름 공백 포함 특수문자가 없으면 true, ID 공백 포함 특수문자 없으면 true, ID 에 문자 숫자 포함일경우 true
 
                     String encryptedPassword = PasswordUtil.sha256(loginVo.getUserPw()); // 패스워드 암호화
 
                     loginVo.setUserPw(encryptedPassword);
 
-                    return userService.userRegister(loginVo);
+                    if (userService.userRegister(loginVo) > 0) {
+                        return 1;
+                    }else {
+                        return 0;
+                    }
                 } else {
                     return 0;
                 }
@@ -171,12 +179,24 @@ public class UserController {
     @PostMapping("/buy")
     public int buy(@RequestBody PayVo payVo, HttpServletRequest request) {
         LoginVo loginVo = (LoginVo)request.getSession().getAttribute("loginVo");
-        if(loginVo == null || loginVo.getUserId() == null) {
+
+        if(loginVo.getUserId() == null && loginVo.getKakaoId() == null) {
             return 0; // 로그인정보 비어있음
         }else {
 
             MainVo mainVo = mainService.getMainDetail(payVo.getProductSeq());
-            String orderUserId = loginVo.getUserId();
+
+            String orderUserId = "";
+            String orderKakaoId = "";
+
+            if (loginVo.getUserId() != null) {
+                orderUserId = loginVo.getUserId();
+            }
+
+            if (loginVo.getKakaoId() != null) {
+                orderKakaoId = loginVo.getKakaoId();
+            }
+
             int productCount = mainVo.getProductCount();
             int orderCount = payVo.getOrderCount();
             int productPrice = mainVo.getProductPrice();
@@ -190,7 +210,15 @@ public class UserController {
                 return 2; // 재고 부족
             }else {
                 payVo.setProductCount(productCount);
-                payVo.setOrderUserId(orderUserId);
+
+                if (!orderUserId.equals("")) {
+                    payVo.setOrderUserId(orderUserId);
+                }
+
+                if (!orderKakaoId.equals("")) {
+                    payVo.setOrderKakaoId(orderKakaoId);
+                }
+
                 payVo.setOrderPrice(realPrice);
 
                 int result = userService.insertOrder(payVo);
@@ -230,19 +258,9 @@ public class UserController {
     @PostMapping("/basket")
     public int basket(@RequestBody PayVo payVo, HttpServletRequest request) {
         LoginVo loginVo = (LoginVo)request.getSession().getAttribute("loginVo");
-        if(loginVo == null || loginVo.getUserId() == null) {
+        if(loginVo.getUserId() == null && loginVo.getKakaoId() == null) {
             return 0; // 로그인정보 비어있음
         }
-
-
-
-
-
-
-
-
-
-
         return 1;
     }
 }

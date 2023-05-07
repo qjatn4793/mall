@@ -79,22 +79,60 @@ public class LoginController {
 
     @PostMapping("/kakaoLogin")
     public String kakaoLogin(@RequestParam(required = false) String email,
-                            /*@RequestParam(required = false) String profile_image,*/
-                            /*@RequestParam(required = false) String birthday,*/
+                             @RequestParam(required = false) String userId,
                              @RequestParam(required = false) String profile_nickname,
-                             HttpServletRequest request,
-                             RedirectAttributes redirectAttributes) {
+                             HttpServletRequest request) {
 
         HttpSession session = request.getSession();
 
-        LoginVo loginVo = loginService.emailCheck(email);
+        LoginVo loginVo = new LoginVo();
+
+        loginVo.setKakaoId(userId);
+        loginVo.setUserEmail(email);
+
+        loginVo = loginService.kakaoCheck(loginVo);
 
         if (loginVo == null) {
-            redirectAttributes.addAttribute("email", email);
-            redirectAttributes.addAttribute("profile_nickname", profile_nickname);
-            return "0"; // 회원정보없음 회원가입 페이지로 email, profile_nickname 가지고 가야함
+
+            loginVo = loginService.emailCheck(email);
+
+            if (loginVo != null){
+                loginVo.setKakaoId(userId);
+                int result = loginService.updateKakaoId(loginVo);
+
+                if (result > 0) {
+                    // 로그인 시간 기록
+                    loginService.updateLoginDate(loginVo);
+                    session.setAttribute("loginVo", loginVo);
+                    return "2"; // 가입된 이메일이 존재함
+                }else {
+                    return "3"; // 알 수 없는 오류
+                }
+
+            }else {
+
+                LoginVo kakaoLoginVo = new LoginVo();
+
+                kakaoLoginVo.setUserId(userId);
+                kakaoLoginVo.setKakaoId(userId);
+                kakaoLoginVo.setUserEmail(email);
+                kakaoLoginVo.setUserName(profile_nickname);
+
+                loginService.insertKakao(kakaoLoginVo);
+                // 로그인 시간 기록
+                loginService.updateKakaoLoginDate(kakaoLoginVo);
+                kakaoLoginVo = loginService.kakaoCheck(kakaoLoginVo);
+
+                System.out.println(kakaoLoginVo);
+
+                session.setAttribute("loginVo", kakaoLoginVo);
+                return "1"; // 회원정보없음 자동 회원가입 후 로그인 email, profile_nickname, kakaoId 가지고 가야함
+            }
+
         } else {
             session.setAttribute("loginVo", loginVo);
+            // 로그인 시간 기록
+            loginService.updateLoginDate(loginVo);
             return "1"; // 로그인 성공
         }
     }

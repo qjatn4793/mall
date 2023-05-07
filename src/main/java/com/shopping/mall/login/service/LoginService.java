@@ -33,8 +33,30 @@ public class LoginService {
         return loginMapper.updateLoginDate(loginVo);
     }
 
-    public LoginVo emailCheck(String userEmail){
+    public LoginVo emailCheck(String email){
 
-        return loginMapper.emailCheck(userEmail);
+        return loginMapper.emailCheck(email);
     }
+
+    public LoginVo kakaoCheck(LoginVo loginVo){
+
+        return loginMapper.kakaoCheck(loginVo);
+    }
+
+    public int updateKakaoId(LoginVo loginVo){
+
+        return loginMapper.updateKakaoId(loginVo);
+    }
+
+    public int insertKakao(LoginVo loginVo){
+
+        return loginMapper.insertKakao(loginVo);
+    }
+
+    public int updateKakaoLoginDate(LoginVo loginVo) {
+
+        return loginMapper.updateKakaoLoginDate(loginVo);
+    }
+
+
 }

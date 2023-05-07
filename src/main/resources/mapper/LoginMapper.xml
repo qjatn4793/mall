@@ -22,7 +22,23 @@
         UPDATE user SET login_date = NOW() WHERE user_id = #{userId}
     </update>
 
+    <update id="updateKakaoLoginDate" parameterType="com.shopping.mall.login.vo.LoginVo">
+        UPDATE user SET login_date = NOW() WHERE kakao_id = #{kakaoId}
+    </update>
+
     <select id="emailCheck" parameterType="string" resultType="com.shopping.mall.login.vo.LoginVo">
-        SELECT user_seq, user_id, user_name, user_birth, user_phone, user_email, user_profile, status FROM user WHERE user_email = #{userEmail}
+        SELECT user_seq, user_id, kakao_id, user_name, user_birth, user_phone, user_email, user_profile, status FROM user WHERE user_email = #{email}
     </select>
+
+    <select id="kakaoCheck" parameterType="com.shopping.mall.login.vo.LoginVo" resultType="com.shopping.mall.login.vo.LoginVo">
+        SELECT user_seq, user_id, kakao_id, user_name, user_birth, user_phone, user_email, user_profile, status FROM user WHERE kakao_id = #{kakaoId} AND user_email = #{userEmail}
+    </select>
+
+    <update id="updateKakaoId" parameterType="com.shopping.mall.login.vo.LoginVo">
+        UPDATE user SET kakao_id = #{kakaoId} WHERE user_id = #{userId}
+    </update>
+
+    <insert id="insertKakao" parameterType="com.shopping.mall.login.vo.LoginVo">
+        INSERT INTO user (user_id, kakao_id, user_name, user_email, reg_date) VALUES (#{userId}, #{kakaoId}, #{userName}, #{userEmail}, NOW())
+    </insert>
 </mapper>

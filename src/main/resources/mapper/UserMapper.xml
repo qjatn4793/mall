@@ -7,6 +7,7 @@
     <resultMap id="orderResultMap" type="com.shopping.mall.user.vo.PayVo">
         <id property="orderSeq" column="order_seq"/>
         <result property="orderUserId" column="order_user_id"/>
+        <result property="orderKakaoId" column="order_kakao_id"/>
         <result property="orderRegDate" column="order_regDate"/>
         <result property="orderStatus" column="order_status"/>
         <result property="orderCount" column="order_count"/>
@@ -22,7 +23,7 @@
     </select>
 
     <insert id="userRegister" parameterType="com.shopping.mall.login.vo.LoginVo">
-        INSERT INTO user (user_id, user_pw, user_name, user_birth, user_phone, user_email, reg_date, ad_yn) VALUES (#{userId},#{userPw},#{userName},#{userBirth},#{userPhone}, #{userEmail}, NOW(), #{adYn})
+        INSERT INTO user (user_id, kakao_id, user_pw, user_name, user_birth, user_phone, user_email, reg_date, ad_yn) VALUES (#{userId},#{kakaoId},#{userPw},#{userName},#{userBirth},#{userPhone}, #{userEmail}, NOW(), #{adYn})
     </insert>
 
     <update id="userUpdate" parameterType="com.shopping.mall.login.vo.LoginVo">
@@ -34,11 +35,11 @@
     </update>
 
     <insert id="insertOrder" parameterType="com.shopping.mall.user.vo.PayVo">
-        INSERT INTO product_order (order_user_id, order_regDate, order_count, product_seq) VALUES (#{orderUserId}, NOW(), #{orderCount}, #{productSeq})
+        INSERT INTO product_order (order_user_id, order_regDate, order_count, product_seq) VALUES (IFNULL(#{orderUserId}, #{orderKakaoId}), NOW(), #{orderCount}, #{productSeq})
     </insert>
 
     <update id="updateUserTotalPrice" parameterType="com.shopping.mall.user.vo.PayVo">
-      UPDATE user SET total_price = total_price + #{orderPrice} WHERE user_id = #{orderUserId}
+        UPDATE user SET total_price = total_price + #{orderPrice} WHERE user_id = #{orderUserId}
     </update>
 
     <select id="getOrderList" resultMap="orderResultMap">

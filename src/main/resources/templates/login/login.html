@@ -100,52 +100,53 @@
     }
 
     // SDK 초기화
-    Kakao.init('8dd884d05fa172554d6846cd45ea9f5e');
     //Kakao.init('5fa0c49cbb1239032c8e96a6547f7bb4');
+    Kakao.init('8dd884d05fa172554d6846cd45ea9f5e');
 
     Kakao.Auth.createLoginButton({
         container: '#kakao-login-btn',
         success: function(authObj) {
             // 로그인 성공시 처리 코드
-            //console.log(JSON.stringify(authObj));
 
             // 토큰으로 서버에 로그인 요청
-            //var accessToken = authObj.access_token;
-            //var refreshToken = authObj.refresh_token;
-            //var tokenType = authObj.token_type;
-            //var expiresIn = authObj.expires_in;
-            //var refreshTokenExpiresIn = authObj.refresh_token_expires_in;
+            var accessToken = authObj.access_token;
 
             // 사용자 정보 요청
             Kakao.API.request({
                 url: '/v2/user/me',
                 success: function(response) {
                     // 사용자 정보 처리 코드
-                    console.log(response);
 
                     // 사용자 정보를 서버로 전달
                     $.ajax({
                         type: "POST",
                         url: "/kakaoLogin",
                         data: {
+                            userId: response.id, // 사용자 고유 ID 전달
                             email: response.kakao_account.email, // 사용자 이메일 주소 전달
                             profile_nickname: response.kakao_account.profile.nickname // 사용자 닉네임 전달
                         },
                         success: function(data) {
                             // 로그인 처리 후 리다이렉트 등 필요한 작업 수행
                             console.log(data);
-                            if (data == 1) {
+                            if (data == 0) {
+                                alert("회원정보가 없습니다. 회원가입 후 이용해주세요");
+                                location.href = "userRegister?email=" + response.kakao_account.email + "&profile_nickname=" + response.kakao_account.profile.nickname + "&kakao_id=" + response.id;
+                            }else if (data == 1) {
                                 alert("로그인 되었습니다.");
                                 if (document.referrer.indexOf('userRegister') !== -1) {
                                     location.href = '/';
                                 }
-
+                                location.replace(document.referrer);
+                            }else if (data == 2) {
+                                alert("가입된 계정이 존재합니다. 계정 통합 후 로그인합니다.");
+                                if (document.referrer.indexOf('userRegister') !== -1) {
+                                    location.href = '/';
+                                }
                                 location.replace(document.referrer);
                             }else {
-                                alert("회원정보가 없습니다. 회원가입 후 이용해주세요");
-                                //alert("email: " + response.kakao_account.email + ", profile_nickname: " + response.kakao_account.profile.nickname);
-                                //location.href = "/userRegister";
-                                location.href = "userRegister?email=" + response.kakao_account.email + "&profile_nickname=" + response.kakao_account.profile.nickname;
+                                alert("비정상적인 접근입니다.");
+                                location.replace(document.referrer);
                             }
                         },
                         error: function(xhr, status, error) {
@@ -166,8 +167,6 @@
         },
         scope:
             'account_email, ' +
-            /*'profile_image, ' +*/
-            /*'birthday, ' +*/
             'profile_nickname' // 사용자 정보 관련 스코프 추가
     });
 

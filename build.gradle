@@ -40,6 +40,9 @@ dependencies {
     // lombok을 위해 추가
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
 
+    // JSON
+    //implementation 'org.json:json:20210307'
+
 }
 
 test {

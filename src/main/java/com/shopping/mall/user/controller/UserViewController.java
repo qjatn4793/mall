@@ -45,6 +45,7 @@ public class UserViewController {
     @GetMapping("/userRegister")
     public String userRegister(HttpServletRequest request,
                                Model model,
+                               @RequestParam(required = false) String kakao_id,
                                @RequestParam(required = false) String email,
                                @RequestParam(required = false) String profile_nickname){
 
@@ -54,13 +55,15 @@ public class UserViewController {
             return "redirect:/";
         }
 
-        System.out.println("?");
+        System.out.println(kakao_id);
         System.out.println(email);
         System.out.println(profile_nickname);
-        System.out.println("?");
+        if (kakao_id != null && email != null && profile_nickname != null) {
+            model.addAttribute("kakao_id", kakao_id);
+            model.addAttribute("email", email);
+            model.addAttribute("profile_nickname", profile_nickname);
+        }
 
-        model.addAttribute("email", email);
-        model.addAttribute("profile_nickname", profile_nickname);
         return "user/userRegister.html";
     }
 
@@ -83,7 +86,7 @@ public class UserViewController {
 
         LoginVo loginVo = (LoginVo) session.getAttribute("loginVo");
 
-        if(loginVo == null || loginVo.getUserId() == null){
+        if(loginVo.getUserId() == null && loginVo.getKakaoId() == null){
             return "redirect:/";
         }
 
@@ -111,7 +114,7 @@ public class UserViewController {
 
         LoginVo loginVo = (LoginVo) session.getAttribute("loginVo");
 
-        if(loginVo == null || loginVo.getUserId() == null){
+        if(loginVo.getUserId() == null && loginVo.getKakaoId() == null){
             return "redirect:/";
         }
 
@@ -139,7 +142,7 @@ public class UserViewController {
 
         LoginVo loginVo = (LoginVo) session.getAttribute("loginVo");
 
-        if(loginVo == null || loginVo.getUserId() == null){
+        if(loginVo.getUserId() == null && loginVo.getKakaoId() == null){
             return "redirect:/";
         }
 

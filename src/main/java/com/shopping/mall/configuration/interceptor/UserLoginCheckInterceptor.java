@@ -1,5 +1,6 @@
 package com.shopping.mall.configuration.interceptor;
 
+import com.shopping.mall.login.vo.LoginVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -20,7 +21,9 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor {
         boolean loginCheck =false;
 
         HttpSession session = request.getSession();
-        if(session.getAttribute("loginVo") != null){
+        LoginVo loginVo = (LoginVo) session.getAttribute("loginVo");
+
+        if(loginVo.getUserId() != null && loginVo.getKakaoId() != null){
             loginCheck = true;
 
         }else{

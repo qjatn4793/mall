@@ -13,7 +13,8 @@
                                     <div class="card-body">
                                         <!--<form>-->
                                             <div class="form-floating mb-3">
-                                                <input class="form-control" id="userId" type="text" placeholder="ID를 입력해 주세요" maxlength="20" onkeyup="userIdCheck()"/>
+                                                <input class="form-control" id="userId" type="text" placeholder="ID를 입력해 주세요" th:value="${user_id}" maxlength="20" onkeyup="userIdCheck()" th:readonly="${user_id != null and user_id != ''}"/>
+                                                <input class="form-control" id="kakaoId" type="text" placeholder="ID를 입력해 주세요" th:value="${kakao_id}" maxlength="20" style="display: none;"/>
                                                 <label for="userId">ID를 입력해 주세요</label>
                                             </div>
                                             <p id = "checkId" size = "2"></p>
@@ -21,7 +22,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <!--<input class="form-control" id="userName" type="text" placeholder="이름을 입력해 주세요" maxlength="10"/>-->
-                                                        <input class="form-control" id="userName" type="text" name="userName" th:value="${profile_nickname}" placeholder="이메일 주소를 입력해 주세요" th:readonly="${profile_nickname != null and profile_nickname != ''}">
+                                                        <input class="form-control" id="userName" type="text" name="userName" th:value="${profile_nickname}" placeholder="이름을 입력해 주세요" th:readonly="${profile_nickname != null and profile_nickname != ''}">
                                                         <label for="userName">이름</label>
                                                     </div>
                                                 </div>
@@ -259,6 +260,12 @@
                                     userName = userName.replace(/\"/g, '');
 
 
+                                    var kakaoId = $("#kakaoId").val();
+
+                                    if (kakaoId == "") {
+                                        kakaoId = null;
+                                    }
+
                                     $.ajax({
                                         type: "POST",
                                         url: "/userRegister",
@@ -267,6 +274,7 @@
                                         contentType: "application/json",
                                         data: JSON.stringify({
                                             "userId": userId,
+                                            "kakaoId": kakaoId,
                                             "userPw": userPw,
                                             "userName": userName,
                                             "userBirth": userBirth,

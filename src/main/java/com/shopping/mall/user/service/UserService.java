@@ -48,7 +48,12 @@ public class UserService {
 
             int updateUserTotalPrice = userMapper.updateUserTotalPrice(payVo);
 
-            return userMapper.insertOrder(payVo);
+            if (updateUserTotalPrice > 0) {
+                return userMapper.insertOrder(payVo);
+            }else {
+                return 0;
+            }
+
         }else {
             return 0;
         }

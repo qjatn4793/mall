@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class LoginVo {
     private int userSeq;
     private String userId;
+    private String kakaoId;
     private String userPw;
     private String userName;
     private String userProfile;

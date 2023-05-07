@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class PayVo {
     private int orderSeq;
     private String orderUserId;
+    private String orderKakaoId;
     private String orderRegDate;
     private int orderStatus;
     private int orderCount;
