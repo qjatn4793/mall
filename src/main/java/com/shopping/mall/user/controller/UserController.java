@@ -94,6 +94,9 @@ public class UserController {
         HttpSession session = request.getSession();
         SHA256 sha256 = new SHA256();
 
+        LoginVo loginCheckVo = (LoginVo) session.getAttribute("loginVo");
+        loginVo.setUserIdCheck(loginCheckVo.getUserId());
+
         if (userService.userIdCheck(loginVo) == 1) { // 유저 중복 체크 1 일경우 있음
 
             try {
@@ -127,6 +130,7 @@ public class UserController {
         matchTest2 = Pattern.compile(checkString).matcher(userId); // ID 공백 포함 특수문자 없으면 true
 
         if (matchTest2.find() == true) {
+            loginVo.setUserIdCheck(userId);
             return userService.userIdCheck(loginVo);
         }else {
             return 0;

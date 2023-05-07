@@ -24,36 +24,37 @@
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input th:value="${loginVo.userName}" class="form-control" id="userName" type="text" maxlength="10" readonly/>
                                                     <label for="userName">이름</label>
+                                                    <input th:value="${loginVo.userName}" class="form-control" id="userName" type="text" maxlength="10" readonly/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating">
-                                                    <input th:value="${loginVo.userPhone}" class="form-control" id="userPhone" type="tel" maxlength="11" readonly/>
                                                     <label for="userName">휴대폰번호</label>
+                                                    <input th:value="${loginVo.userPhone}" class="form-control" id="userPhone" type="tel" maxlength="11" readonly/>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-floating mb-3">
-                                            <input th:value="${loginVo.userBirth}" class="form-control" id="userBirth" type="text" maxlength="8" readonly/>
                                             <label for="userName">생년월일</label>
+                                            <input th:value="${loginVo.userBirth}" class="form-control" id="userBirth" type="text" maxlength="8" readonly/>
                                         </div>
-                                        <!--<div class="form-floating mb-3">
-                                            <input th:value="${loginVo.userId}" class="form-control" id="userId" type="text" maxlength="20" readonly/>
-                                            <label for="userName">사용자 ID</label>
-                                        </div>-->
+                                        <div class="form-floating mb-3">
+                                            <label for="userId">사용자 ID</label>
+                                            <input class="form-control" th:value="${loginVo.userId}" id="userId" type="text" maxlength="20" onkeyup="userIdCheck()" readonly/>
+                                        </div>
+                                        <p id = "checkId" size = "2"></p>
                                         <div class="row mb-3">
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input style="display:none;" class="form-control" id="userPw" type="password" placeholder="패스워드를 입력해 주세요" minlength="10" maxlength="20" readonly/>
                                                     <label style="display:none;" id="userPwLabel" for="userPw">변경하실 패스워드를 입력해 주세요</label>
+                                                    <input style="display:none;" class="form-control" id="userPw" type="password" placeholder="패스워드를 입력해 주세요" minlength="10" maxlength="20" readonly/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <input style="display:none;" class="form-control" id="userPwConfirm" type="password" placeholder="다시한번 패스워드를 입력해 주세요" minlength="10" maxlength="20" onkeyup="userPwCheck()" readonly/>
                                                     <label style="display:none;" id="userPwConfirmLabel" for="userPwConfirm">다시한번 패스워드를 입력해 주세요</label>
+                                                    <input style="display:none;" class="form-control" id="userPwConfirm" type="password" placeholder="다시한번 패스워드를 입력해 주세요" minlength="10" maxlength="20" onkeyup="userPwCheck()" readonly/>
                                                 </div>
                                             </div>
                                         </div>
@@ -105,6 +106,40 @@
                 });
             });
 
+            function userIdCheck() {
+                var userId = $("#userId").val();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/userIdCheck",
+                    dataType: "text",
+                    async: false,
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        "userId": userId
+                    }),
+                    async: false,
+                    error: function () {
+                        $("#checkId").html("사용할 수 없는 ID 입니다.");
+                        $("#checkId").attr("color", "red");
+                    },
+                    success: function (data) {
+                        if (userId.length > 5 && userId.match(/[A-Za-z0-9]/) != null) {
+                            if (data == "0") {
+                                $("#checkId").html("사용할 수 있는 ID 입니다.");
+                                $("#checkId").css("color", "green");
+                            } else {
+                                $("#checkId").html("사용할 수 없는 ID 입니다.");
+                                $("#checkId").css("color", "red");
+                            }
+                        }else {
+                            $("#checkId").html("ID 는 한글은 입력이 안되며, 영문 숫자조합 5자리 이상이어야 합니다.");
+                            $("#checkId").css("color", "red");
+                        }
+                    }
+                });
+            }
+
             function userPwCheck(){
                 var userPw = $("#userPw").val();
                 var userPwConfirm = $("#userPwConfirm").val();
@@ -120,8 +155,9 @@
 
             function userUpdateToggle(){
 
-                alert("회원정보를 수정해 주세요!\n사용자 ID 를 제외한 값을 수정이 가능합니다.");
+                alert("회원정보를 수정해 주세요!");
 
+                $('#userId').css("display", "block");
                 $('#userUpdateToggle').css('display', 'none');
                 $('#userUpdate').css("display", "block");
                 $('#userPw').css("display", "block");
@@ -129,6 +165,7 @@
                 $('#userPwLabel').css("display", "block");
                 $('#userPwConfirmLabel').css("display", "block");
 
+                $('#userId').prop('readonly', false);
                 $('#userName').prop('readonly', false);
                 $('#userPhone').prop('readonly', false);
                 $('#userBirth').prop('readonly', false);

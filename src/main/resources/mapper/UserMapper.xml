@@ -19,7 +19,7 @@
     </resultMap>
 
     <select id="userIdCheck" parameterType="com.shopping.mall.login.vo.LoginVo" resultType="Integer">
-        SELECT COUNT(*) FROM user WHERE user_id = #{userId}
+        SELECT COUNT(*) FROM user WHERE user_id = #{userIdCheck}
     </select>
 
     <insert id="userRegister" parameterType="com.shopping.mall.login.vo.LoginVo">
@@ -27,7 +27,7 @@
     </insert>
 
     <update id="userUpdate" parameterType="com.shopping.mall.login.vo.LoginVo">
-        UPDATE user SET user_name = #{userName}, user_pw = #{userPw}, user_birth = #{userBirth}, user_phone = #{userPhone} WHERE user_id = #{userId}
+        UPDATE user SET user_id = #{userId}, user_name = #{userName}, user_pw = #{userPw}, user_birth = #{userBirth}, user_phone = #{userPhone} WHERE user_id = #{userIdCheck}
     </update>
 
     <update id="updateUserImg" parameterType="com.shopping.mall.login.vo.LoginVo">
