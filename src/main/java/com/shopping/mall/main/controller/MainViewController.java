@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -55,6 +56,19 @@ public class MainViewController {
         MainVo mainVo = mainService.getMainDetail(productSeq);
         List<MainVo> previewList = mainService.getMainPreview(productSeq);
         List<MainVo> categoryList = mainService.getCategoryList(); // category 데이터 가져오기
+
+        // 최근 본 상품 목록에 추가
+        List<Integer> recentlyViewedProducts = (List<Integer>) session.getAttribute("recentlyViewedProducts");
+        if (recentlyViewedProducts == null) {
+            recentlyViewedProducts = new ArrayList<>();
+        }
+        if (recentlyViewedProducts.size() >= 10) {
+            recentlyViewedProducts.remove(0);
+        }
+        if (!recentlyViewedProducts.contains(productSeq)) {
+            recentlyViewedProducts.add(productSeq);
+        }
+        session.setAttribute("recentlyViewedProducts", recentlyViewedProducts);
 
         model.addAttribute("mainVo", mainVo);
         model.addAttribute("previewList", previewList);

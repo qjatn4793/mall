@@ -29,4 +29,4 @@ spring :
 
 shared:
   image:
-    upload-dir: D:\project\mallDriver\common\img
+    upload-dir: /home/qjatn4793/mallDriver/common/img

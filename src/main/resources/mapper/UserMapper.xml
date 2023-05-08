@@ -81,4 +81,8 @@
     <select id="getTerms" parameterType="int" resultType="com.shopping.mall.user.vo.TermsVo">
       SELECT * FROM terms where terms_seq = #{termsSeq}
     </select>
+
+    <select id="getViewHistory" parameterType="int" resultType="com.shopping.mall.main.vo.MainVo">
+        SELECT * FROM product_contents WHERE product_seq = #{productSeq}
+    </select>
 </mapper>

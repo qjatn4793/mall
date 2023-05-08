@@ -2,6 +2,7 @@ package com.shopping.mall.user.service;
 
 import com.shopping.mall.login.vo.LoginVo;
 import com.shopping.mall.main.mapper.MainMapper;
+import com.shopping.mall.main.vo.MainVo;
 import com.shopping.mall.user.mapper.UserMapper;
 import com.shopping.mall.user.vo.PayVo;
 import com.shopping.mall.user.vo.TermsVo;
@@ -100,5 +101,11 @@ public class UserService {
     public TermsVo getTerms(int termsSeq) {
 
         return userMapper.getTerms(termsSeq);
+    }
+
+    public MainVo getViewHistory(int productSeq) {
+        MainVo mainVo = userMapper.getViewHistory(productSeq);
+        mainVo.setCategoryName(userMapper.getCategoryName(mainVo.getCategorySeq()));
+        return mainVo;
     }
 }

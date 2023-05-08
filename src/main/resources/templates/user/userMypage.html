@@ -9,7 +9,22 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-7">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">마이페이지</h3></div>
+                                    <div class="card-header">
+                                        <ul class="nav nav-tabs d-flex justify-content-center" role="tablist">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-toggle="tab" href="/userMypage" role="tab">마이페이지</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="/paymentHistory" role="tab">주문내역</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="/basketHistory" role="tab">장바구니</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" data-toggle="tab" href="/viewHistory" role="tab">최근 본 상품</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                     <div class="card-body">
                                         <div class="text-center mb-3">
                                             <img id="profileImg" th:src="${loginVo.userProfile}" onerror="this.onerror=null; this.src='common/img/profile.jpg'" class="rounded-circle img-fluid" alt="Profile image" style="width: 128px; height: 128px;">
@@ -65,7 +80,6 @@
                                             <button id="userUpdateToggle" class="btn btn-primary btn-block" onclick="userUpdateToggle()">회원정보수정</button>
                                             <button id="userUpdate" class="btn btn-primary btn-block" style="display:none;" onclick="userUpdate()">회원정보수정완료</button>
                                         </div>
-                                        <a class="badge bg-secondary text-decoration-none link-light mt-3" href="/paymentHistory" >주문내역</a>
                                         <a class="badge bg-secondary text-decoration-none link-light" href="/" >메인으로 돌아가기</a>
                                     </div>
                                 </div>
@@ -97,7 +111,7 @@
                     contentType: false,
                     success: function(response) {
                         alert("프로필 변경을 성공하였습니다. 다시 로그인 해주세요.");
-                        location.reload();
+                        location.href = "/login";
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         alert('Failed to upload file');

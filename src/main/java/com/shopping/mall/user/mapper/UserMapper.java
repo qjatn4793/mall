@@ -1,6 +1,7 @@
 package com.shopping.mall.user.mapper;
 
 import com.shopping.mall.login.vo.LoginVo;
+import com.shopping.mall.main.vo.MainVo;
 import com.shopping.mall.user.vo.PayVo;
 import com.shopping.mall.user.vo.TermsVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -44,4 +45,6 @@ public interface UserMapper {
 
 
     TermsVo getTerms(int termsSeq);
+
+    MainVo getViewHistory(int productSeq);
 }

@@ -23,10 +23,9 @@ public class UserLoginCheckInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         LoginVo loginVo = (LoginVo) session.getAttribute("loginVo");
 
-        if(loginVo.getUserId() != null && loginVo.getKakaoId() != null){
+        if (loginVo != null && (loginVo.getUserId() != null || loginVo.getKakaoId() != null)) {
             loginCheck = true;
-
-        }else{
+        } else {
             response.sendRedirect("/login");
             session.invalidate();
         }
