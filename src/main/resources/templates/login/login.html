@@ -3,6 +3,16 @@
 <!--공통 head-->
 <head th:replace="~{common/common-head :: common-head}"></head>
 <body class="bg-primary">
+<style>
+    /* 모바일 화면 */
+    @media only screen and (max-width: 600px) {
+        #kakao-login-btn {
+            width: 150px;
+            height: 50px;
+        }
+    }
+
+</style>
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
         <main>

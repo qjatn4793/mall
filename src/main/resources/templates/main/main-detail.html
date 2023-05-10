@@ -11,6 +11,49 @@
         <div class="loader-section section-right"></div>
 
     </div>-->
+    <style>
+        /* 모바일 화면 */
+        @media only screen and (max-width: 600px) {
+            /* 버튼 사이 간격 조정 */
+            .d-flex {
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            /* 버튼 크기와 패딩 조정 */
+            .btn {
+                padding: 10px 30px;
+                font-size: 14px;
+            }
+            /* "목록 보기" 버튼 너비 조정 */
+            .btn-primary {
+                width: 100%;
+            }
+
+            .viewList{
+                font-size: 16px;
+                padding: 12px 85px 14px;
+            }
+        }
+
+        /* 데스크톱 화면 */
+        @media only screen and (min-width: 600px) {
+            /* 버튼 사이 간격 조정 */
+            .d-flex {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+            }
+            /* 버튼 크기와 패딩 조정 */
+            .btn {
+                padding: 12px 85px 14px;
+                font-size: 16px;
+            }
+
+            .viewList{
+                margin-top: 1.5rem!important;
+                padding: 12px 197px 14px;
+            }
+        }
+    </style>
     <nav th:replace="~{common/common-nav :: common-nav}"></nav>
 
     <div th:replace="~{common/common-search :: common-search}"></div>
@@ -41,12 +84,12 @@
                     </div>
                     <div class="mb-4 flex-wrap">
                         <div>
-                            <div class="mb-4 d-flex" style="width: 100%;">
-                                <a href="#" id="buy" class="btn btn-primary" style="padding: 12px 85px 14px; margin-right: 10px; background-color: #007bff; font-size: 16px; border-color: #007bff; color: #fff;">구매하기</a>
+                            <div class="d-flex" style="width: 100%;">
+                                <a href="#" id="buy" class="btn btn-primary" style="padding: 12px 85px 14px; background-color: #007bff; font-size: 16px; border-color: #007bff; color: #fff;">구매하기</a>
                                 <a href="#" id="basket" class="btn btn-primary" style="padding: 12px 85px 14px; background-color: #28a745; font-size: 16px; border-color: #28a745; color: #fff;">장바구니</a>
                             </div>
-                            <div class="mb-4">
-                                <a href="#" class="btn btn-primary" style="padding: 12px 197px 14px;" onclick="window.location.href = document.referrer;">목록 보기</a>
+                            <div class="mb-4 d-flex">
+                                <a href="#" class="btn btn-primary viewList" onclick="goBackOrGoToReferrer()">목록 보기</a>
                             </div>
                         </div>
                     </div>
@@ -224,6 +267,14 @@
                 }
             });
         });
+
+        function goBackOrGoToReferrer() {
+            if (document.referrer === window.location.href) {
+                window.location.href = "/";
+            } else {
+                window.location.href = document.referrer;
+            }
+        }
     </script>
 </body>
 </html>

@@ -184,7 +184,7 @@ public class UserController {
     public int buy(@RequestBody PayVo payVo, HttpServletRequest request) {
         LoginVo loginVo = (LoginVo)request.getSession().getAttribute("loginVo");
 
-        if(loginVo.getUserId() == null && loginVo.getKakaoId() == null) {
+        if (loginVo == null || (loginVo.getUserId() == null && loginVo.getKakaoId() == null)) {
             return 0; // 로그인정보 비어있음
         }else {
 
