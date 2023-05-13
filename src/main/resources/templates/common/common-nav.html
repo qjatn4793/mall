@@ -64,12 +64,12 @@
             </div>
         </button>
         <ul>
-            <li>
-                <p>1:1문의</p>
-                <textarea>
-
-                </textarea>
+            <p>1:1 문의</p>
+            <li class="chat-window">
+                <!-- 메시지 표시 영역 -->
             </li>
+            <textarea class="custom-textarea"></textarea>
+            <button class="btn-primary" style="float: right; margin-right: 6px; width: 240px;">전송</button>
         </ul>
     </div>
     <script>
@@ -113,5 +113,13 @@
             var menu = document.querySelector('.float-btn ul');
             menu.classList.toggle('selected');
         }
+
+        // 모달 외부 클릭 시 닫기
+        window.addEventListener('click', function(event) {
+            var menu = document.querySelector('.float-btn ul');
+            if (!event.target.matches('.float-btn') && !event.target.matches('.float-btn *')) {
+                menu.classList.remove('selected');
+            }
+        });
     </script>
 </nav>
