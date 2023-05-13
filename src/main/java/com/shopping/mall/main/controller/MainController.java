@@ -102,7 +102,7 @@ public class MainController {
         } else if (userInput.contains("어디") || userInput.contains("where") || userInput.contains("ㅇㄷ")) {
             response = "저는 인터넷 공간속 어딘가에 있습니다.";
         } else if (userInput.contains("ID") || userInput.contains("PW") || userInput.contains("password") || userInput.contains("패스워드") || userInput.contains("암호") || userInput.contains("아이디") || userInput.contains("계정") ) {
-            response = "ID / PW 는 우측 상단 Login 버튼을 클릭하시면 로그인 페이지에서 하단의 아이디 / 비밀번호 찾기 버튼을 클릭하시면 이용이 가능하십니다!";
+            response = "ID / PW 는 우측 상단 Login 버튼을 클릭하시면 접근할 수 있는 로그인 페이지에서 하단의 아이디 / 비밀번호 찾기 버튼을 클릭하시면 이용이 가능하십니다!";
         } else {
             response = "질문을 이해할 수 없습니다. 고객센터의 전화번호는 031-111-1234 입니다.";
         }
