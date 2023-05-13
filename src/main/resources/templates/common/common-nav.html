@@ -21,7 +21,7 @@
                         Videos
                     </a>
                 </li>-->
-                <li class="nav-item">
+                <!--<li class="nav-item">
                     <a class="nav-link nav-link-3" href="/about" th:classappend="${#httpServletRequest.getRequestURI() == '/about' ? 'active' : ''}">
                         About
                     </a>
@@ -30,7 +30,7 @@
                     <a class="nav-link nav-link-4" href="/contact" th:classappend="${#httpServletRequest.getRequestURI() == '/contact' ? 'active' : ''}">
                         Contact
                     </a>
-                </li>
+                </li>-->
                 <li class="nav-item" th:if="${loginVo == null}">
                     <a class="nav-link nav-link-5" href="/login" th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active' : ''}">
                         Login
@@ -54,6 +54,23 @@
                 </li>
             </ul>
         </div>
+    </div>
+    <div class="float-btn">
+        <button class="nav-menu">
+            <div class="selected" onclick="toggleMenu()">
+                <span class="bar pos1"></span>
+                <span class="bar pos2"></span>
+                <span class="bar pos3"></span>
+            </div>
+        </button>
+        <ul>
+            <li>
+                <p>1:1문의</p>
+                <textarea>
+
+                </textarea>
+            </li>
+        </ul>
     </div>
     <script>
         // SDK 초기화
@@ -90,6 +107,11 @@
                     }
                 }
             });
+        }
+
+        function toggleMenu() {
+            var menu = document.querySelector('.float-btn ul');
+            menu.classList.toggle('selected');
         }
     </script>
 </nav>

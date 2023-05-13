@@ -769,3 +769,95 @@ select:not([multiple]) {
     border: none;
     display:block;
 }
+
+/*리모컨 버튼*/
+.float-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background-color: #337ab7;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.nav-menu .selected {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin-bottom: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.pos1 {
+    transform: rotate(45deg);
+}
+
+.pos2 {
+    opacity: 0;
+}
+
+.pos3 {
+    transform: rotate(-45deg);
+}
+
+.float-btn ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    position: absolute;
+    bottom: 60px;
+    right: 0;
+    width: 150px;
+    transition: all 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.float-btn ul.selected {
+    opacity: 1;
+    visibility: visible;
+}
+
+.float-btn li {
+    padding: 10px;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.float-btn li:last-child {
+    border-bottom: none;
+}
+
+.float-btn p {
+    margin: 0;
+    font-weight: bold;
+}
+
+.float-btn a {
+    display: inline-block;
+    margin-left: 10px;
+    text-decoration: none;
+    color: #333;
+}
+/*리모컨 버튼*/
