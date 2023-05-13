@@ -56,8 +56,8 @@
         </div>
     </div>
     <div class="float-btn">
-        <button class="nav-menu">
-            <div class="selected" onclick="toggleMenu()">
+        <button class="nav-menu" onclick="toggleMenu()">
+            <div class="selected">
                 <span class="bar pos1"></span>
                 <span class="bar pos2"></span>
                 <span class="bar pos3"></span>
@@ -65,11 +65,11 @@
         </button>
         <ul>
             <p>1:1 문의</p>
-            <li class="chat-window">
+            <li class="chat-window" id="chat-window">
                 <!-- 메시지 표시 영역 -->
             </li>
-            <textarea class="custom-textarea"></textarea>
-            <button class="btn-primary" style="float: right; margin-right: 6px; width: 240px;">전송</button>
+            <textarea class="custom-textarea" id="user-input" onkeydown="handleKeyPress(event)"></textarea>
+            <button class="btn-primary" style="float: right; margin-right: 6px; width: 240px;" onclick="sendMessage()">전송</button>
         </ul>
     </div>
     <script>
@@ -109,9 +109,62 @@
             });
         }
 
+        function sendMessage() {
+            var userInput = document.getElementById('user-input').value;
+            if (userInput.trim() !== '') {
+                processUserMessage('사용자 질문: ' + userInput);
+
+                // Ajax 요청 보내기
+                $.ajax({
+                    url: '/chatBot',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ userInput: userInput }),
+                    success: function(response) {
+                        processBotResponse('챗봇 응답: ' + response.message);
+                    },
+                    error: function() {
+                        // Ajax 요청이 실패했을 경우에 대한 처리
+                    }
+                });
+
+                document.getElementById('user-input').value = ''; // 메시지 입력창 비우기
+            }
+        }
+
+        function processUserMessage(message) {
+            var chatWindow = document.getElementById('chat-window');
+            var userMessage = document.createElement('div');
+            userMessage.textContent = message;
+            userMessage.classList.add('user-message'); // 사용자 메시지에 클래스 추가
+            chatWindow.appendChild(userMessage);
+        }
+
+        function processBotResponse(response) {
+            var chatWindow = document.getElementById('chat-window');
+            var botMessage = document.createElement('div');
+            botMessage.textContent = response;
+            botMessage.classList.add('bot-message'); // 챗봇 응답에 클래스 추가
+            chatWindow.appendChild(botMessage);
+        }
+
         function toggleMenu() {
             var menu = document.querySelector('.float-btn ul');
             menu.classList.toggle('selected');
+
+            if (!menu.classList.contains('selected')) {
+                clearChatWindow(); // 모달이 닫힐 때 메시지 창의 내용을 지우는 함수 호출
+            } else {
+                processBotResponse('챗봇 응답: ' + '안녕하세요 고객님! 무엇을 도와드릴까요?');
+            }
+        }
+
+        // 모달 창 닫힐때 메세지창 지우기
+        function clearChatWindow() {
+            var chatWindow = document.getElementById('chat-window');
+            while (chatWindow.firstChild) {
+                chatWindow.removeChild(chatWindow.firstChild);
+            }
         }
 
         // 모달 외부 클릭 시 닫기
@@ -119,7 +172,16 @@
             var menu = document.querySelector('.float-btn ul');
             if (!event.target.matches('.float-btn') && !event.target.matches('.float-btn *')) {
                 menu.classList.remove('selected');
+                clearChatWindow();
             }
         });
+
+        // 엔터키 감지
+        function handleKeyPress(event) {
+            if (event.keyCode === 13 && !event.shiftKey) { // Enter 키를 눌렀을 때 전송, Shift 키와 함께 누를 경우 줄바꿈
+                event.preventDefault(); // Enter 키의 기본 동작 방지
+                sendMessage(); // 메시지 전송 함수 호출
+            }
+        }
     </script>
 </nav>

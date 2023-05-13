@@ -844,6 +844,7 @@ select:not([multiple]) {
     padding: 10px;
     border-bottom: 1px solid #e6e6e6;
     height: 275px;
+    overflow: auto;
 }
 
 .float-btn li:last-child {
@@ -899,3 +900,23 @@ select:not([multiple]) {
     margin-bottom: 10px;
 }
 /*리모컨 버튼*/
+
+/*챗봇 관련*/
+
+.user-message {
+    background-color: #f1f1f1;
+    padding: 8px;
+    margin-bottom: 10px;
+    text-align: right; /* 사용자 메시지를 오른쪽에 정렬 */
+    font-size: 8px;
+}
+
+.bot-message {
+    background-color: #e5e5e5;
+    padding: 8px;
+    margin-bottom: 10px;
+    text-align: left; /* 챗봇 메시지를 왼쪽에 정렬 */
+    font-size: 8px;
+}
+
+/*챗봇 관련*/
