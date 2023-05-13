@@ -267,4 +267,23 @@ public class UserController {
         }
         return 1;
     }
+
+    @PostMapping("/userPassword")
+    public LoginVo resetPassword(@RequestBody LoginVo loginVo) {
+        String userEmail = loginVo.getUserEmail();
+
+        // Email address format validation
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        if (!userEmail.matches(emailRegex)) {
+            return null;
+        }
+
+        LoginVo loginVoCheck = userService.userEmailCheck(userEmail);
+
+        if (loginVoCheck == null) {
+            return null;
+        }else {
+            return loginVoCheck;
+        }
+    }
 }

@@ -27,7 +27,25 @@
     </insert>
 
     <update id="userUpdate" parameterType="com.shopping.mall.login.vo.LoginVo">
-        UPDATE user SET user_id = #{userId}, user_name = #{userName}, user_pw = #{userPw}, user_birth = #{userBirth}, user_phone = #{userPhone} WHERE user_id = #{userIdCheck}
+        UPDATE user
+        <set>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="userPw != null">
+                user_pw = #{userPw},
+            </if>
+            <if test="userBirth != null">
+                user_birth = #{userBirth},
+            </if>
+            <if test="userPhone != null">
+                user_phone = #{userPhone},
+            </if>
+        </set>
+        WHERE user_id = #{userIdCheck}
     </update>
 
     <update id="updateUserImg" parameterType="com.shopping.mall.login.vo.LoginVo">
@@ -84,5 +102,9 @@
 
     <select id="getViewHistory" parameterType="int" resultType="com.shopping.mall.main.vo.MainVo">
         SELECT * FROM product_contents WHERE product_seq = #{productSeq}
+    </select>
+
+    <select id="userEmailCheck" parameterType="string" resultType="com.shopping.mall.login.vo.LoginVo">
+        SELECT * FROM user WHERE user_email = #{userEmail}
     </select>
 </mapper>

@@ -108,4 +108,16 @@ public class UserService {
         mainVo.setCategoryName(userMapper.getCategoryName(mainVo.getCategorySeq()));
         return mainVo;
     }
+
+    public LoginVo userEmailCheck(String userEmail) {
+
+        LoginVo loginVo = userMapper.userEmailCheck(userEmail);
+
+        if (loginVo == null) {
+            return null;
+        }else {
+            // loginVo 에서 랜덤한 비밀번호 생성 후 이메일 전송하고, 해당 비밀번호로 패스워드를 변경하도록 하는 로직 추가 필요
+            return loginVo;
+        }
+    }
 }

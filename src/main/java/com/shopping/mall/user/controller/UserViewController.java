@@ -70,11 +70,11 @@ public class UserViewController {
 
         HttpSession session = request.getSession();
 
-        if(session.getAttribute("loginVo") == null){
+        if(session.getAttribute("loginVo") != null){
             return "redirect:/";
+        }else {
+            return "user/userPassword.html";
         }
-
-        return "user/userPassword.html";
     }
 
     @GetMapping("/paymentHistory")
