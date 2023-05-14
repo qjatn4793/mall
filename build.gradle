@@ -43,6 +43,9 @@ dependencies {
     // JSON
     //implementation 'org.json:json:20210307'
 
+    // JAVA MAIL 을 위해 추가
+    implementation 'com.sun.mail:javax.mail:1.6.2'
+
 }
 
 test {

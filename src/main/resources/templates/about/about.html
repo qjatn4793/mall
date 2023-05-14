@@ -3,109 +3,388 @@
 <!--공통 head-->
 <head th:replace="~{common/common-head :: common-head}"></head>
 <body>
-    <!-- Page Loader -->
-    <!--<div id="loader-wrapper">
-        <div id="loader"></div>
+<!-- Page Loader -->
+<!--<div id="loader-wrapper">
+    <div id="loader"></div>
 
-        <div class="loader-section section-left"></div>
-        <div class="loader-section section-right"></div>
+    <div class="loader-section section-left"></div>
+    <div class="loader-section section-right"></div>
 
-    </div>-->
-    <nav th:replace="~{common/common-nav :: common-nav}"></nav>
+</div>-->
+<nav th:replace="~{common/common-nav :: common-nav}"></nav>
 
-    <div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="common/img/hero.jpg"></div>
+<div class="tm-hero d-flex justify-content-center align-items-center" data-parallax="scroll" data-image-src="common/img/hero.jpg"></div>
 
-    <div class="container-fluid tm-mt-60">
-        <div class="row mb-4">
-            <h2 class="col-12 tm-text-primary">
-                About Catalog-Z Website Template
-            </h2>
+<style>
+    table {
+        font-family: Arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th, td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        font-size: 8px;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<div class="container-fluid tm-mt-60">
+    <div class="row tm-mb-50">
+        <div class="col-lg-2 mb-5">
+            <h2 class="tm-text-primary mb-5">Contact Page</h2>
+            <div class="col-12 mb-5">
+                <img src="common/img/kimbeomsoo.jpg" style="width: 100%;" alt="Image" class="mb-4">
+                <h2 class="tm-text-primary mb-4">KIM BEOM SOO</h2>
+                <h3 class="tm-text-secondary h5 mb-4">백엔드 웹 개발자</h3>
+                <p class="mb-4">
+                    안녕하세요, 저는 김범수입니다. <br>저는 현재 시큐러스라는 회사에서 근무하고 있으며, 이곳에서 다양한 경험을 쌓고 있습니다. 또한, 사이드 프로젝트로 현재 보고계신 쇼핑몰 포트폴리오를 개발하였습니다.
+                </p>
+                <p class="mb-4">
+                    이 쇼핑몰 포트폴리오는 제가 개발한 온라인 쇼핑 플랫폼의 예시를 담고 있습니다. 제가 개인적으로 직접 기획, 개발하였고 디자인은 무료 템플릿인 catalog_z 를 사용하였습니다. 이 포트폴리오를 통해 제가 쇼핑몰 개발에 대한 이해와 능력을 보여드리고자 합니다.
+                </p>
+                <h4>쇼핑몰 포트폴리오</h4>
+                <table>
+                    <tr>
+                        <th>프로그램</th>
+                        <th>사용 버전</th>
+                    </tr>
+                    <tr>
+                        <td>IDE 툴</td>
+                        <td>IntelliJ 2018.03</td>
+                    </tr>
+                    <tr>
+                        <td>JVM</td>
+                        <td>JDK 1.8</td>
+                    <tr>
+                        <td>개발언어</td>
+                        <td>JAVA / Thymleaf</td>
+                    </tr>
+                    <tr>
+                        <td>Build</td>
+                        <td>Gradle</td>
+                    </tr>
+                    <tr>
+                        <td>OS</td>
+                        <td>centOS 7, Window 10</td>
+                    </tr>
+                    <tr>
+                        <td>서버 툴</td>
+                        <td>putty, WinSCP</td>
+                    </tr>
+                    <tr>
+                        <td>프록시 툴</td>
+                        <td>burpSuite</td>
+                    </tr>
+                    <tr>
+                        <td>프레임워크</td>
+                        <td>Spring Boot</td>
+                    </tr>
+                    <tr>
+                        <td>DB</td>
+                        <td>MySQL 5.6</td>
+                    </tr>
+                    <tr>
+                        <td>사용 Library</td>
+                        <td>Lombok, MySQL Connector, MyBatis, JavaMail, Commons FileUpload, Spring WebSocket, jsch-0.1.55</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="row tm-mb-74 tm-row-1640">            
-            <div class="col-lg-5 col-md-6 col-12 mb-3">
-                <img src="common/img/about.jpg" alt="Image" class="img-fluid">
+        <div class="col-lg-6 mb-5">
+            <div class="tm-address-col">
+                <h2 class="tm-text-primary mb-5">About Me</h2>
             </div>
-            <div class="col-lg-7 col-md-6 col-12">
-                <div class="tm-about-img-text">
-                    <p class="mb-4">
-                  You may support TemplateMo website by making <a href="https://paypal.me/templatemo" target="_parent" rel="sponsored">a small contribution</a> via PayPal. This will be helpful for us. We hope you like this Catalog-Z photo / video template for your website. We are making new templates regularly for you. Please come back and visit our <a rel="sponsored" href="https://templatemo.com" target="_parent">TemplateMo website</a> again. </p>
-                    <p>
-                        Credits go to Pexels and Unsplash for photos and video used in this template. Catalog-Z is free <a rel="sponsored" href="https://v5.getbootstrap.com/">Bootstrap 5</a> Alpha 2 HTML Template designed for video and photo websites.</p> 
-                    <p>You are <b>allowed</b> to use this template for your commercial or non-commercial websites. You can integrate it with any kind of CMS website. You are <b>NOT allowed</b> to redistribute the downloadable template ZIP file on any template collection website. Please <a rel="nofollow" href="https://templatemo.com/contact" target="_parent">contact us</a> for more information. Thank you.</p>
-                </div>                
-            </div>
-        </div>
-        <div class="row tm-mb-50">
-            <div class="col-md-6 col-12">
-                <div class="tm-about-2-col">
-                    <h2 class="tm-text-primary mb-4">
-                        Left side of 2-Column content
-                    </h2>
-                    <p class="mb-4">
-                        Pellentesque urna odio, scelerisque eu mauris vitae, vestibulum sodales neque. Ut augue justo, tincidunt nec aliquet ac, cursus vel augue. Suspendisse vel quam imperdiet, sodales tellus sed, ullamcorper lorem.
-                    </p>
-                    <p>
-                        Suspendisse id consequat risus. Aliquam varius posuere nunc, nec imperdiet neque condimentum at. Aenean porta eleifend venenatis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                    </p>
-                </div>                
-            </div> 
-            <div class="col-md-6 col-12">
-                <div class="tm-about-2-col">
-                    <h2 class="tm-text-primary mb-4">
-                        Right-side Title goes here
-                    </h2>
-                    <p class="mb-4">
-                        Pellentesque urna odio, scelerisque eu mauris vitae, vestibulum sodales neque. Ut augue justo, tincidunt nec aliquet ac, cursus vel augue. Suspendisse vel quam imperdiet, sodales tellus sed, ullamcorper lorem.
-                    </p>
-                    <p>
-                        Suspendisse id consequat risus. Aliquam varius posuere nunc, nec imperdiet neque condimentum at. Aenean porta eleifend venenatis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                    </p>
-                </div>                
-            </div>     
-        </div> <!-- row -->
-        <div class="row tm-mb-50">
-            <div class="col-md-4 col-12">
-                <div class="tm-about-3-col">
-                    <div class="tm-about-icon-container mb-5">
-                        <i class="fas fa-desktop fa-3x tm-text-primary"></i>
-                    </div>                
-                    <h2 class="tm-text-primary mb-4">Three-column title one</h2>
-                    <p class="mb-4">Integer tristique arcu scelerisque mauris posuere convallis. Fusce egestas ipsum sapien, hendrerit ultricies nisi viverra eget. Vestibulum in tortor eget elit rutrum interdum. </p>
-                    <p>Cras auctor velit urna, et feugiat ex tincidunt ut. Sed viverra, elit at pulvinar tristique, sem quam vehicula dolor, sed scelerisque augue mauris non dolor.</p>
-                </div>                
-            </div>
-            <div class="col-md-4 col-12">
-                <div class="tm-about-3-col">
-                    <div class="tm-about-icon-container mb-5">
-                        <i class="fas fa-mobile-alt fa-3x tm-text-primary"></i>
-                    </div>                
-                    <h2 class="tm-text-primary mb-4">Title two of three-column</h2>
-                    <p class="tm-mb-50">Donec nec est tincidunt, rhoncus nulla sit amet, imperdiet augue. Phasellus sodales placerat ipsum ac auctor. Mauris molestie blandit turpis. Mauris ante tellus, feugiat nec metus non, bibendum semper velit.</p>                
-                    <div class="text-center">
-                        <a href="#" class="btn btn-primary">Read More</a>
-                    </div>
-                </div>                
-            </div>
-            <div class="col-md-4 col-12">
-                <div class="tm-about-3-col">
-                    <div class="tm-about-icon-container mb-5">
-                        <i class="fas fa-photo-video fa-3x tm-text-primary"></i>
-                    </div>                
-                    <h2 class="tm-text-primary mb-4">Third Title goes here</h2>
-                    <p class="mb-4">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec nec est tincidunt, rhoncus nulla sit amet, imperdiet augue. </p>
-                    <p>Phasellus sodales placerat ipsum ac auctor. Mauris molestie blandit turpis. Mauris ante tellus, feugiat nec metus non, bibendum semper velit.</p>
-                </div>                
-            </div>
-        </div>
-    </div> <!-- container-fluid, tm-container-content -->
+            <div align=center>
+                <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=300&section=header&text=BeomSooKim&fontSize=100" style="width: 100%;" />
+                <div>
+                    <ul class="tm-contacts">
+                        <li>
+                            <a href="#" class="tm-text-gray">
+                                <i class="fas fa-envelope"></i>
+                                Email: qjatn4792@naver.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="tm-text-gray">
+                                <i class="fas fa-phone"></i>
+                                Tel: 010-9919-4461
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://59.12.242.207:7777" class="tm-text-gray">
+                                <i class="fas fa-user"></i>
+                                사용자 페이지: 59.12.242.207:7777
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://59.12.242.207:8888" class="tm-text-gray">
+                                <i class="fas fa-cogs"></i>
+                                관리자 페이지: 59.12.242.207:8888
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/qjatn4793/" class="tm-text-gray">
+                                <i class="fab fa-github"></i>
+                                GitHub: github.com/qjatn4793
+                            </a>
+                        </li>
+                    </ul>
+                </div><br>
 
-    <!--공통 footer-->
-    <div th:replace="~{common/common-footer :: common-footer}"></div>
-    <script src="common/js/plugins.js"></script>
-    <!--<script>
-        $(window).on("load", function() {
-            $('body').addClass('loaded');
-        });
-    </script>-->
+                <div>
+                    <img align=top src="https://github-readme-stats.vercel.app/api/top-langs/?username=qjatn4793&layout=compact&theme=dracula"/>
+                </div><br>
+                <div>
+                    <img src="https://github-readme-stats.vercel.app/api?username=qjatn4793&show_icons=true&theme=radical"/>
+                </div>
+
+                <div align=center>
+                    <h3>✨ Front-End Skill ✨</h3>
+                    <img src="https://img.shields.io/badge/Html5-E34F26?style=flat-square&logo=Html5&logoColor=white"/>&nbsp;&nbsp;
+                    <img src="https://img.shields.io/badge/css3-1572B6?style=flat-square&logo=css3&logoColor=white"/>&nbsp;&nbsp;
+                    <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=flat-square&logo=Javascript&logoColor=white"/>&nbsp;&nbsp;
+                    <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/>
+                </div>
+                <div align=center>
+                    <h3>✨ Back-End Skill ✨</h3>
+                    <img src="https://img.shields.io/badge/JAVA-FF7800?style=flat-square&logo=JAVA&logoColor=white"/>&nbsp;&nbsp;&nbsp;
+                    <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/>&nbsp;&nbsp;&nbsp;
+                    <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=SpringBoot&logoColor=white"/>
+                </div>
+                <div align=center>
+                    <h3>✨ SQL Skill ✨</h3>
+                    <img src="https://img.shields.io/badge/Mysql-4479A1?style=flat-square&logo=Mysql&logoColor=white"/>&nbsp;&nbsp;&nbsp;
+                    <img src="https://img.shields.io/badge/Microsoft SQL Server-CC2927?style=flat-square&logo=Microsoft SQL Server"/>
+                </div>
+                <div align=center>
+                    <h3>✨ Server Controll Skill ✨</h3>
+                    <img src="https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=Linux&logoColor=white"/>&nbsp;&nbsp;
+                    <img src="https://img.shields.io/badge/CentOS-262577?style=flat-square&logo=Microsoft SQL Server"/>&nbsp;&nbsp;
+                    <img src="https://img.shields.io/badge/Apache-D22128?style=flat-square&logo=Apache&logoColor=white"/>&nbsp;&nbsp;
+                    <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=flat-square&logo=Tomcat&logoColor=white"/>
+                </div>
+                <img src="https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=footer" style="width: 100%;"/>
+            </div>
+        </div>
+
+        <div class="col-lg-4 col-12">
+            <h2 class="tm-text-primary mb-5">Project</h2>
+            <h4>시큐러스 - 보안솔루션 팀 ( 2020-09 ~ )</h4>
+            <h5>1. 서버</h5>
+            <table>
+                <tr>
+                    <th>작업</th>
+                    <th>상세 내용</th>
+                </tr>
+                <tr>
+                    <td>WEBSITEONE 솔루션 구축 작업</td>
+                    <td>서비스 포트 오픈 작업, 아파치 연동, 톰캣 연동, 설정값 커스터마이징</td>
+                </tr>
+                <tr>
+                    <td>WEB - WAS 서버 분리 작업</td>
+                    <td>AJP 포트를 통한 WEB - WAS 분리 및 서비스 연동</td>
+                </tr>
+                <tr>
+                    <td>서버 보안 작업</td>
+                    <td>root 계정 접근 차단 설정, 사용자계정 분리작업, 상위 디렉토리 접근 금지, 서버 TIMEOUT 시간 설정, 사용하는 방화벽 포트 오픈</td>
+                </tr>
+                <tr>
+                    <td>Apache 컴파일 설치 작업</td>
+                    <td>apr-1.7.0, apr-util-1.6.1, expat-2.2.9, pcre-8.36, httpd2.4.46, tomcat-connectors-1.2.48-src</td>
+                </tr>
+                <tr>
+                    <td>Tomcat 컴파일 설치 작업</td>
+                    <td>tomcat9.0.41.tar.gz</td>
+                </tr>
+                <tr>
+                    <td>Apache 세팅 작업</td>
+                    <td>mod_jk 세팅, 허용되지 않은 메소드 차단 세팅(GET, POST 외 메소드 차단), VirtualHost 세팅</td>
+                </tr>
+                <tr>
+                    <td>DB 설치 및 기본 세팅 커스터마이징</td>
+                    <td>MySQL5.6, MariaDB</td>
+                </tr>
+                <!-- 나머지 작업들 추가 -->
+            </table>
+
+            <h4>2. 개발</h4>
+            <table>
+                <tr>
+                    <th>작업</th>
+                    <th>상세 내용</th>
+                </tr>
+                <tr>
+                    <td>SSO 솔루션 구축 및 커스터마이징</td>
+                    <td>JAVA/JSP, ASP.NET, PHP를 이용한 구축 및 커스터마이징</td>
+                </tr>
+                <tr>
+                    <td>CIIM 솔루션 고도화 작업 및 유지보수</td>
+                    <td>스프링부트 ,JAVA/Thymleaf, REST API 기반의 고도화 작업</td>
+                </tr>
+                <tr>
+                    <td>시큐어 코딩</td>
+                    <td>XSS, SQL Injection, CSRF 정규식 패턴 등록 및 필터 추가</td>
+                </tr>
+                <tr>
+                    <td>사이트 소스 리패키징 작업 및 오류 개선</td>
+                    <td>스프링프레임워크, JAVA/JSP, 소스 리패키징, 오류 개선</td>
+                </tr>
+                <!-- 나머지 작업들 추가 -->
+            </table>
+
+            <h4>3. DB</h4>
+            <table>
+                <tr>
+                    <th>작업</th>
+                    <th>상세 내용</th>
+                </tr>
+                <tr>
+                    <td>MYSQL 덤프 및 이관 작업</td>
+                    <td>MySQL 5.6</td>
+                </tr>
+                <tr>
+                    <td>MSSQL 덤프 및 이관 작업</td>
+                    <td>MSSQL 2016</td>
+                </tr>
+                <tr>
+                    <td>DB 스케쥴러 및 PROC 파일 오류 쿼리 수정</td>
+                    <td>MariaDB 10.4</td>
+                </tr>
+                <!-- 나머지 작업들 추가 -->
+            </table>
+
+            <h4>4. 활용 프로그램</h4>
+            <table>
+                <tr>
+                    <th>프로그램</th>
+                    <th>사용 버전</th>
+                </tr>
+                <tr>
+                    <td>IDE 툴</td>
+                    <td>IntelliJ 2018.03</td>
+                </tr>
+                <tr>
+                    <td>JVM</td>
+                    <td>JDK 1.8</td>
+                <tr>
+                    <td>개발언어</td>
+                    <td>JAVA / JSP (메인), PHP, ASP.NET</td>
+                </tr>
+                <tr>
+                    <td>OS</td>
+                    <td>centOS 7, Oracle Linux, Window 10</td>
+                </tr>
+                <tr>
+                    <td>서버 툴</td>
+                    <td>putty, WinSCP</td>
+                </tr>
+                <tr>
+                    <td>프록시 툴</td>
+                    <td>burpSuite</td>
+                </tr>
+                <tr>
+                    <td>프레임워크</td>
+                    <td>Spring framework, Spring Boot, 전자정부 프레임워크</td>
+                </tr>
+                <tr>
+                    <td>DB</td>
+                    <td>MySQL 5.6, MariaDB 10.4, MSSQL 2016</td>
+                </tr>
+            </table>
+            <h4>5. 기간 별 투입 프로젝트</h4>
+            <table>
+                <tr>
+                    <th>기간</th>
+                    <th>프로젝트</th>
+                    <th>담당분야</th>
+                </tr>
+                <tr>
+                    <td>2022.08~</td>
+                    <td>시큐엠-자체 문자 전송 사이트 고도화 및 서비스 오픈</td>
+                    <td>기존 사이트 오류 개선 및 기능 개선, PG사연동, 문자서비스 Agent연동, 보안 취약점 시큐어코딩, API 개발을 통한 무료거부문자 서비스 모듈 연동</td>
+                </tr>
+                <tr>
+                    <td>2022.07~2022.08</td>
+                    <td>메리트애즈컴퍼니-문자 전송 사이트 재구축 및 방어벽(웹사이트원) 납품</td>
+                    <td>메리트문자 문자서비스 사이트 리패키징 및 시큐어코딩, CAFE24 호스팅 2개 서버 DMZ ZONE, INNER ZONE 구축 및 보안 작업, 가비아 도메인과 CAFE24 호스팅 연결 작업, Apache2.4 - Tomcat8.5 외내부 분리 작업 및 웹사이트원 솔루션 설계 및 구축, mariaDB 10.4 버전 기본 세팅 및 일부 커스터마이징, 운영 서버 배포 및 서비스 정상작동 확인 (발주기관 : 메리트애즈컴퍼니, 개발언어 : JAVA/JSP, 서버 : 리눅스)</td>
+                </tr>
+                <tr>
+                    <td>2022.06~2022.07</td>
+                    <td>CIIM (통합계정관리 솔루션) 고도화 작업</td>
+                    <td>전체적인 설계 재구성 및 사용자 관리, 그룹 관리 영역 오류 개선, EAM(그룹 관리) 메뉴단 구성 (발주기관 : 자사 솔루션 연구 개발, 개발언어 : JAVA/JSP, 서버 : 리눅스)</td>
+                </tr>
+                <!-- 나머지 프로젝트들 추가 -->
+            </table>
+            <br>
+            <h4>두잇시스템 - 보안관제 팀 ( 2019-12 ~ 2020-03 )</h4>
+            <h4>1. 서버</h4>
+            <table>
+                <tr>
+                    <th>작업</th>
+                    <th>상세 내용</th>
+                </tr>
+                <tr>
+                    <td>일배치 스크립트, 월배치 스크립트 기동 및 오류 체크</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>파일 시스템 메모리 관리</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>이슈 로그 백업</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>서버 보안 관제</td>
+                    <td></td>
+                </tr>
+            </table>
+            <h4>2. 활용 프로그램</h4>
+            <table>
+                <tr>
+                    <th>프로그램</th>
+                    <th>사용 버전</th>
+                </tr>
+                <tr>
+                    <td>OS</td>
+                    <td>centOS 7, Unix Solaris</td>
+                </tr>
+                <tr>
+                    <td>JVM</td>
+                    <td>JDK 1.8</td>
+                </tr>
+                <tr>
+                    <td>서버 툴</td>
+                    <td>putty</td>
+                </tr>
+            </table>
+            <h4>3. 기간 별 투입 프로젝트</h4>
+            <table>
+                <tr>
+                    <th>기간</th>
+                    <th>프로젝트</th>
+                    <th>담당분야</th>
+                </tr>
+                <tr>
+                    <td>2019.12 ~ 2020.03</td>
+                    <td>동양생명 보안관제</td>
+                    <td>보안관제 모니터링</td>
+                </tr>
+                <!-- 나머지 프로젝트들 추가 -->
+            </table>
+        </div>
+    </div>
+</div> <!-- container-fluid, tm-container-content -->
+
+<!--공통 footer-->
+<div th:replace="~{common/common-footer :: common-footer}"></div>
+<script src="common/js/plugins.js"></script>
 </body>
 </html>

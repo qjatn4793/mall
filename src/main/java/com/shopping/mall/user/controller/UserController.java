@@ -269,7 +269,7 @@ public class UserController {
     }
 
     @PostMapping("/userPassword")
-    public LoginVo resetPassword(@RequestBody LoginVo loginVo) {
+    public String resetPassword(@RequestBody LoginVo loginVo) {
         String userEmail = loginVo.getUserEmail();
 
         // Email address format validation
@@ -283,7 +283,7 @@ public class UserController {
         if (loginVoCheck == null) {
             return null;
         }else {
-            return loginVoCheck;
+            return "가입하신 이메일 주소로 ID 와 변경된 패스워드를 전송하였습니다. 이메일을 확인해 주세요.";
         }
     }
 }

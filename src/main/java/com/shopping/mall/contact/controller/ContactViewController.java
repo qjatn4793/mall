@@ -12,13 +12,13 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class ContactViewController {
 
-    @GetMapping("/contact")
+    /*@GetMapping("/contact")
     public String contact(Model model, HttpServletRequest request){
 
         HttpSession session = request.getSession();
         model.addAttribute("loginVo", session.getAttribute("loginVo"));
 
         return "contact/contact.html";
-    }
+    }*/
 
 }
