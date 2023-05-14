@@ -16,6 +16,7 @@ public class LoginVo {
     private String kakaoId;
     private String userPw;
     private String userName;
+    private String userAddress;
     private String userProfile;
     private String userBirth;
     private String userPhone;
